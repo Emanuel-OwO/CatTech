@@ -52,8 +52,53 @@
     <Compile Include="Layer\UI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoCliente.Designer.cs">
+      <DependentUpon>frmMantenimientoCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoMarca.Designer.cs">
+      <DependentUpon>frmMantenimientoMarca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoProducto.Designer.cs">
+      <DependentUpon>frmMantenimientoProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoProveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoProveedor.Designer.cs">
+      <DependentUpon>frmMantenimientoProveedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoStock.Designer.cs">
+      <DependentUpon>frmMantenimientoStock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoTipoDispositivo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoTipoDispositivo.Designer.cs">
+      <DependentUpon>frmMantenimientoTipoDispositivo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Procesos\frmFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Procesos\frmFactura.Designer.cs">
+      <DependentUpon>frmFactura.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Layer\UI\Procesos\frmFactura.resx">
+      <DependentUpon>frmFactura.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -85,8 +130,6 @@
     <Folder Include="Layer\Entities\" />
     <Folder Include="Layer\Interfaces\" />
     <Folder Include="Layer\Persistencia\" />
-    <Folder Include="Layer\UI\Mantenimientos\" />
-    <Folder Include="Layer\UI\Procesos\" />
     <Folder Include="Layer\UI\Reportes\" />
     <Folder Include="Layer\UI\Seguridad\" />
     <Folder Include="Util\" />
