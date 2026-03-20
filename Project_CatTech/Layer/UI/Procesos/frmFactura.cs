@@ -16,5 +16,10 @@ namespace Project_CatTech.Layer.UI.Procesos
         {
             InitializeComponent();
         }
+
+        private void frmFactura_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

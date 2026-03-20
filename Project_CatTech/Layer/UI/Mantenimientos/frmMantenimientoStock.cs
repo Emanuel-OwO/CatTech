@@ -16,5 +16,10 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
         {
             InitializeComponent();
         }
+
+        private void frmMantenimientoStock_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

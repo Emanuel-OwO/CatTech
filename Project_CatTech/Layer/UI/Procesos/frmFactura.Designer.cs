@@ -359,6 +359,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Name = "frmFactura";
             this.Text = "frmFactura";
+            this.Load += new System.EventHandler(this.frmFactura_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

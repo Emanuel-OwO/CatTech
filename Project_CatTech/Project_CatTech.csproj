@@ -96,6 +96,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoCliente.resx">
+      <DependentUpon>frmMantenimientoCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoMarca.resx">
+      <DependentUpon>frmMantenimientoMarca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoProducto.resx">
+      <DependentUpon>frmMantenimientoProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoProveedor.resx">
+      <DependentUpon>frmMantenimientoProveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoStock.resx">
+      <DependentUpon>frmMantenimientoStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoTipoDispositivo.resx">
+      <DependentUpon>frmMantenimientoTipoDispositivo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Layer\UI\Procesos\frmFactura.resx">
       <DependentUpon>frmFactura.cs</DependentUpon>
     </EmbeddedResource>
