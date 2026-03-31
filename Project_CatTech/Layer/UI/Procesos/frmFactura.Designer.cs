@@ -236,9 +236,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(499, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(541, 12);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(764, 434);
+            this.dataGridView1.Size = new System.Drawing.Size(369, 577);
             this.dataGridView1.TabIndex = 43;
             // 
             // button7
@@ -317,7 +317,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 604);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1390, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(961, 22);
             this.statusStrip1.TabIndex = 35;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -325,7 +325,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1390, 626);
+            this.ClientSize = new System.Drawing.Size(961, 626);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
