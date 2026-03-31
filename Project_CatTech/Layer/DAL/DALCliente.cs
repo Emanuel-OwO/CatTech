@@ -19,7 +19,7 @@ namespace Project_CatTech.Layer.DAL
             {
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    var command = new SqlCommand("usp_INSERT_Cliente");
+                    var command = new SqlCommand("sp_Cliente_Insertar");
 
                     command.Parameters.AddWithValue("@TipoIdentificacion", cliente.TipoIdentificacion);
                     command.Parameters.AddWithValue("@Identificacion", cliente.Identificacion);
@@ -33,6 +33,7 @@ namespace Project_CatTech.Layer.DAL
                     command.Parameters.AddWithValue("@Provincia", cliente.Provincia);
                     command.Parameters.AddWithValue("@Fotografia", cliente.Fotografia);
                     command.Parameters.AddWithValue("@Estado", cliente.Estado);
+                
 
                     command.CommandType = CommandType.StoredProcedure;
                     db.ExecuteNonQuery(command);
@@ -50,7 +51,7 @@ namespace Project_CatTech.Layer.DAL
             {
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    var command = new SqlCommand("usp_UPDATE_Cliente");
+                    var command = new SqlCommand("sp_Cliente_Actualizar");
 
                     command.Parameters.AddWithValue("@IdCliente", cliente.IdCliente);
                     command.Parameters.AddWithValue("@TipoIdentificacion", cliente.TipoIdentificacion);
@@ -82,7 +83,7 @@ namespace Project_CatTech.Layer.DAL
             {
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    var command = new SqlCommand("usp_DELETE_Cliente_ByID");
+                    var command = new SqlCommand("sp_Cliente_Eliminar");
                     command.Parameters.AddWithValue("@IdCliente", id);
 
                     command.CommandType = CommandType.StoredProcedure;
@@ -103,7 +104,7 @@ namespace Project_CatTech.Layer.DAL
 
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    var command = new SqlCommand("usp_SELECT_Cliente_ByID");
+                    var command = new SqlCommand("usp_Cliente_ObtenerPorId");
                     command.Parameters.AddWithValue("@IdCliente", id);
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -148,7 +149,7 @@ namespace Project_CatTech.Layer.DAL
 
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    var command = new SqlCommand("usp_SELECT_Cliente_All");
+                    var command = new SqlCommand("sp_Cliente_ObtenerTodos");
                     command.CommandType = CommandType.StoredProcedure;
 
                     ds = db.ExecuteReader(command, "Cliente");

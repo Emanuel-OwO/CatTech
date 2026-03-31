@@ -56,6 +56,8 @@ namespace Project_CatTech.Layer.BLL
         {
             var lista = DALCliente.SelectAll();
 
+            if (lista == null) return false; 
+
             foreach (var c in lista)
             {
                 if (c.Identificacion == identificacion)

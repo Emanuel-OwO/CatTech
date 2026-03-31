@@ -90,12 +90,15 @@
   <ItemGroup>
     <Compile Include="Enums\TipoGenero.cs" />
     <Compile Include="Layer\BLL\BLLCliente.cs" />
+    <Compile Include="Layer\BLL\BLLPadron.cs" />
     <Compile Include="Layer\BLL\BLLProvincia.cs" />
     <Compile Include="Layer\DAL\DALCliente.cs" />
     <Compile Include="Layer\DAL\DALProvincia.cs" />
     <Compile Include="Layer\Entities\Cliente.cs" />
+    <Compile Include="Layer\Entities\PadronElectoral.cs" />
     <Compile Include="Layer\Entities\Provincia.cs" />
     <Compile Include="Layer\Interfaces\IBLLCliente.cs" />
+    <Compile Include="Layer\Interfaces\IBLLPadron.cs" />
     <Compile Include="Layer\Interfaces\IDALCliente.cs" />
     <Compile Include="Layer\Interfaces\IDALProvincia.cs" />
     <Compile Include="Layer\Persistencia\DataBase.cs" />
