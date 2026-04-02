@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UTNLeccion8B.Utilities;
+using Project_CatTech.Utilities;
 
 namespace Project_CatTech.Layer.UI.Mantenimientos
 {

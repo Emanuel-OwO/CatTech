@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Drawing;
+
 namespace Project_CatTech.Properties
 {
 
@@ -33,6 +35,8 @@ namespace Project_CatTech.Properties
         internal Resources()
         {
         }
+
+        public static Image MSWordAcepted { get; internal set; }
 
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.

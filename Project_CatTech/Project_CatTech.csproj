@@ -90,17 +90,32 @@
   <ItemGroup>
     <Compile Include="Enums\TipoGenero.cs" />
     <Compile Include="Layer\BLL\BLLCliente.cs" />
+    <Compile Include="Layer\BLL\BLLMarca.cs" />
     <Compile Include="Layer\BLL\BLLPadron.cs" />
+    <Compile Include="Layer\BLL\BLLProducto.cs" />
     <Compile Include="Layer\BLL\BLLProvincia.cs" />
+    <Compile Include="Layer\BLL\BLLTipoDispositivo.cs" />
     <Compile Include="Layer\DAL\DALCliente.cs" />
+    <Compile Include="Layer\DAL\DALMarca.cs" />
+    <Compile Include="Layer\DAL\DALProducto.cs" />
     <Compile Include="Layer\DAL\DALProvincia.cs" />
+    <Compile Include="Layer\DAL\DALTipoDispositivo.cs" />
     <Compile Include="Layer\Entities\Cliente.cs" />
+    <Compile Include="Layer\Entities\Marca.cs" />
     <Compile Include="Layer\Entities\PadronElectoral.cs" />
+    <Compile Include="Layer\Entities\Producto.cs" />
     <Compile Include="Layer\Entities\Provincia.cs" />
+    <Compile Include="Layer\Entities\TipoDispositivo.cs" />
     <Compile Include="Layer\Interfaces\IBLLCliente.cs" />
+    <Compile Include="Layer\Interfaces\IBLLMarca.cs" />
     <Compile Include="Layer\Interfaces\IBLLPadron.cs" />
+    <Compile Include="Layer\Interfaces\IBLLProducto.cs" />
+    <Compile Include="Layer\Interfaces\IBLLTipoDispositivo.cs" />
     <Compile Include="Layer\Interfaces\IDALCliente.cs" />
+    <Compile Include="Layer\Interfaces\IDALMarca.cs" />
+    <Compile Include="Layer\Interfaces\IDALProducto.cs" />
     <Compile Include="Layer\Interfaces\IDALProvincia.cs" />
+    <Compile Include="Layer\Interfaces\IDALTipoDispositivo.cs" />
     <Compile Include="Layer\Persistencia\DataBase.cs" />
     <Compile Include="Layer\Persistencia\FactoryConexion.cs" />
     <Compile Include="Layer\Persistencia\FactoryDataBase.cs" />
@@ -161,6 +176,7 @@
     <Compile Include="Util\LeerDatos.cs" />
     <Compile Include="Util\QuickResponse.cs" />
     <Compile Include="Util\UtilError.cs" />
+    <Compile Include="Util\Utilitarios.cs" />
     <Compile Include="Util\Utils.cs" />
     <EmbeddedResource Include="Layer\UI\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
