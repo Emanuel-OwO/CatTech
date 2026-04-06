@@ -8,27 +8,29 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Project_CatTech.Layer.DAL
 {
-    public class DALMarca : IDALMarca
+    public class DALProveedor : IDALProveedor
     {
         private static readonly ILog _log = LogManager.GetLogger("MyControlEventos");
-
-        public void CREATE(Marca marca)
+        public void CREATE(Proveedor proveedor)
         {
             string msg = "";
-            string sql = @"INSERT INTO Marca (CodigoMarca, Descripcion, Estado)
-                           VALUES (@CodigoMarca, @Descripcion, @Estado)";
+            string sql = @"INSERT INTO Proveedor 
+                           (Nombre, Telefono, Correo, Direccion, Estado)
+                           VALUES 
+                           (@Nombre, @Telefono, @Correo, @Direccion, @Estado)";
 
             SqlCommand command = new SqlCommand();
 
             try
             {
-                command.Parameters.AddWithValue("@CodigoMarca", marca.CodigoMarca);
-                command.Parameters.AddWithValue("@Descripcion", marca.Descripcion);
-                command.Parameters.AddWithValue("@Estado", marca.Estado);
+                command.Parameters.AddWithValue("@Nombre", proveedor.Nombre);
+                command.Parameters.AddWithValue("@Telefono", proveedor.Telefono);
+                command.Parameters.AddWithValue("@Correo", proveedor.Correo);
+                command.Parameters.AddWithValue("@Direccion", proveedor.Direccion);
+                command.Parameters.AddWithValue("@Estado", proveedor.Estado);
 
                 command.CommandText = sql;
                 command.CommandType = CommandType.Text;
@@ -45,16 +47,16 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public  void DELETE(int id)
+        public void DELETE(int id)
         {
             string msg = "";
-            string sql = @"DELETE FROM Marca WHERE IdMarca=@IdMarca";
+            string sql = @"DELETE FROM Proveedor WHERE IdProveedor=@IdProveedor";
 
             SqlCommand command = new SqlCommand();
 
             try
             {
-                command.Parameters.AddWithValue("@IdMarca", id);
+                command.Parameters.AddWithValue("@IdProveedor", id);
 
                 command.CommandText = sql;
                 command.CommandType = CommandType.Text;
@@ -71,18 +73,15 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public  List<Marca> SelectAll()
+        public List<Proveedor> SelectAll()
         {
             string msg = "";
             DataSet ds = null;
-            List<Marca> lista = new List<Marca>();
+            List<Proveedor> lista = new List<Proveedor>();
 
-            string sql = @"SELECT IdMarca, CodigoMarca, Descripcion, Estado 
-                   FROM Marca 
-                   WHERE Estado = 1 
-                   ORDER BY Descripcion";
-            //Agregue el where estado para que solo traiga las m,asrcas activas
-
+            string sql = @"SELECT IdProveedor, Nombre, Telefono, Correo, Direccion, Estado
+                           FROM Proveedor
+                           ORDER BY IdProveedor";
 
             SqlCommand command = new SqlCommand();
 
@@ -93,20 +92,22 @@ namespace Project_CatTech.Layer.DAL
 
                 using (IDataBase db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    ds = db.ExecuteReader(command, "Marca");
+                    ds = db.ExecuteReader(command, "Proveedor");
                 }
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    Marca m = new Marca()
+                    Proveedor p = new Proveedor()
                     {
-                        IdMarca = Convert.ToInt32(dr["IdMarca"]),
-                        CodigoMarca = dr["CodigoMarca"].ToString(),
-                        Descripcion = dr["Descripcion"].ToString(),
+                        IdProveedor = Convert.ToInt32(dr["IdProveedor"]),
+                        Nombre = dr["Nombre"].ToString(),
+                        Telefono = dr["Telefono"].ToString(),
+                        Correo = dr["Correo"].ToString(),
+                        Direccion = dr["Direccion"].ToString(),
                         Estado = Convert.ToBoolean(dr["Estado"])
                     };
 
-                    lista.Add(m);
+                    lista.Add(p);
                 }
 
                 return lista;
@@ -118,43 +119,45 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public   Marca SelectById(int id)
+        public Proveedor SelectById(int id)
         {
             string msg = "";
             DataSet ds = null;
-            Marca m = null;
+            Proveedor p = null;
 
-            string sql = @"SELECT IdMarca, CodigoMarca, Descripcion, Estado
-                           FROM Marca
-                           WHERE IdMarca=@IdMarca";
+            string sql = @"SELECT IdProveedor, Nombre, Telefono, Correo, Direccion, Estado
+                           FROM Proveedor
+                           WHERE IdProveedor=@IdProveedor";
 
             SqlCommand command = new SqlCommand();
 
             try
             {
-                command.Parameters.AddWithValue("@IdMarca", id);
+                command.Parameters.AddWithValue("@IdProveedor", id);
                 command.CommandText = sql;
                 command.CommandType = CommandType.Text;
 
                 using (IDataBase db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    ds = db.ExecuteReader(command, "Marca");
+                    ds = db.ExecuteReader(command, "Proveedor");
                 }
 
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     DataRow dr = ds.Tables[0].Rows[0];
 
-                    m = new Marca()
+                    p = new Proveedor()
                     {
-                        IdMarca = Convert.ToInt32(dr["IdMarca"]),
-                        CodigoMarca = dr["CodigoMarca"].ToString(),
-                        Descripcion = dr["Descripcion"].ToString(),
+                        IdProveedor = Convert.ToInt32(dr["IdProveedor"]),
+                        Nombre = dr["Nombre"].ToString(),
+                        Telefono = dr["Telefono"].ToString(),
+                        Correo = dr["Correo"].ToString(),
+                        Direccion = dr["Direccion"].ToString(),
                         Estado = Convert.ToBoolean(dr["Estado"])
                     };
                 }
 
-                return m;
+                return p;
             }
             catch (SqlException er)
             {
@@ -163,23 +166,27 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public void UPDATE(Marca marca)
+        public void UPDATE(Proveedor proveedor)
         {
             string msg = "";
-            string sql = @"UPDATE Marca 
-                           SET CodigoMarca=@CodigoMarca,
-                               Descripcion=@Descripcion,
+            string sql = @"UPDATE Proveedor 
+                           SET Nombre=@Nombre,
+                               Telefono=@Telefono,
+                               Correo=@Correo,
+                               Direccion=@Direccion,
                                Estado=@Estado
-                           WHERE IdMarca=@IdMarca";
+                           WHERE IdProveedor=@IdProveedor";
 
             SqlCommand command = new SqlCommand();
 
             try
             {
-                command.Parameters.AddWithValue("@IdMarca", marca.IdMarca);
-                command.Parameters.AddWithValue("@CodigoMarca", marca.CodigoMarca);
-                command.Parameters.AddWithValue("@Descripcion", marca.Descripcion);
-                command.Parameters.AddWithValue("@Estado", marca.Estado);
+                command.Parameters.AddWithValue("@IdProveedor", proveedor.IdProveedor);
+                command.Parameters.AddWithValue("@Nombre", proveedor.Nombre);
+                command.Parameters.AddWithValue("@Telefono", proveedor.Telefono);
+                command.Parameters.AddWithValue("@Correo", proveedor.Correo);
+                command.Parameters.AddWithValue("@Direccion", proveedor.Direccion);
+                command.Parameters.AddWithValue("@Estado", proveedor.Estado);
 
                 command.CommandText = sql;
                 command.CommandType = CommandType.Text;

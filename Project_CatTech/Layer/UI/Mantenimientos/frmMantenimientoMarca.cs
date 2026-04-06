@@ -35,7 +35,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
                 Marca marca = new Marca();
 
                 marca.CodigoMarca = txtCodigoMarca.Text; 
-                marca.IdMarca = Convert.ToInt32(txtIDMarca.Text);
+               // marca.IdMarca = Convert.ToInt32(txtIDMarca.Text);
                 marca.Descripcion = txtNombreMarca.Text;
                 marca.Estado = rdoActivo.Checked;
 
@@ -145,6 +145,11 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
         }
 
         private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            CargarDesdeGrid();
+        }
+
+        private void dgvDatos_SelectionChanged(object sender, EventArgs e)
         {
             CargarDesdeGrid();
         }

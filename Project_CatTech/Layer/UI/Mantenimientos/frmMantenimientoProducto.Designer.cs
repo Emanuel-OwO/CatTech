@@ -39,8 +39,8 @@
             this.btnSalir = new System.Windows.Forms.ToolStripButton();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbMarca = new System.Windows.Forms.ComboBox();
-            this.txtNombreProducto = new System.Windows.Forms.TextBox();
-            this.txtCodigo = new System.Windows.Forms.TextBox();
+            this.txtCodigoBarras = new System.Windows.Forms.TextBox();
+            this.txtCodigoInterno = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,7 +51,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtExtras = new System.Windows.Forms.TextBox();
+            this.txtCaracteristicas = new System.Windows.Forms.TextBox();
             this.pctFoto = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.rdoActivo = new System.Windows.Forms.RadioButton();
@@ -59,6 +59,16 @@
             this.txtPrecio = new System.Windows.Forms.TextBox();
             this.txtStock = new System.Windows.Forms.TextBox();
             this.pctDocumento = new System.Windows.Forms.PictureBox();
+            this.txtExtras = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtColor = new System.Windows.Forms.TextBox();
+            this.txtModelo = new System.Windows.Forms.TextBox();
+            this.cmbTipoDispositivo = new System.Windows.Forms.ComboBox();
+            this.cmbProveedor = new System.Windows.Forms.ComboBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctFoto)).BeginInit();
@@ -68,7 +78,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(61, 337);
+            this.label11.Location = new System.Drawing.Point(65, 496);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(40, 13);
             this.label11.TabIndex = 133;
@@ -84,7 +94,7 @@
             this.btnSalir});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1066, 71);
+            this.toolStrip1.Size = new System.Drawing.Size(1132, 71);
             this.toolStrip1.TabIndex = 124;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -141,38 +151,38 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(59, 386);
+            this.label9.Location = new System.Drawing.Point(59, 549);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
+            this.label9.Size = new System.Drawing.Size(76, 13);
             this.label9.TabIndex = 122;
-            this.label9.Text = "Extras";
+            this.label9.Text = "Caracteristicas";
             // 
             // cmbMarca
             // 
             this.cmbMarca.FormattingEnabled = true;
             this.cmbMarca.Location = new System.Drawing.Point(200, 205);
             this.cmbMarca.Name = "cmbMarca";
-            this.cmbMarca.Size = new System.Drawing.Size(141, 21);
+            this.cmbMarca.Size = new System.Drawing.Size(145, 21);
             this.cmbMarca.TabIndex = 121;
             // 
-            // txtNombreProducto
+            // txtCodigoBarras
             // 
-            this.txtNombreProducto.Location = new System.Drawing.Point(200, 165);
-            this.txtNombreProducto.Name = "txtNombreProducto";
-            this.txtNombreProducto.Size = new System.Drawing.Size(141, 20);
-            this.txtNombreProducto.TabIndex = 117;
+            this.txtCodigoBarras.Location = new System.Drawing.Point(208, 145);
+            this.txtCodigoBarras.Name = "txtCodigoBarras";
+            this.txtCodigoBarras.Size = new System.Drawing.Size(141, 20);
+            this.txtCodigoBarras.TabIndex = 117;
             // 
-            // txtCodigo
+            // txtCodigoInterno
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(200, 128);
-            this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.Size = new System.Drawing.Size(141, 20);
-            this.txtCodigo.TabIndex = 116;
+            this.txtCodigoInterno.Location = new System.Drawing.Point(208, 108);
+            this.txtCodigoInterno.Name = "txtCodigoInterno";
+            this.txtCodigoInterno.Size = new System.Drawing.Size(141, 20);
+            this.txtCodigoInterno.TabIndex = 116;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(61, 252);
+            this.label6.Location = new System.Drawing.Point(61, 421);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(37, 13);
             this.label6.TabIndex = 114;
@@ -181,7 +191,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(60, 291);
+            this.label4.Location = new System.Drawing.Point(60, 460);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 112;
@@ -190,7 +200,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(60, 205);
+            this.label3.Location = new System.Drawing.Point(60, 213);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 111;
@@ -199,27 +209,27 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(57, 172);
+            this.label2.Location = new System.Drawing.Point(65, 152);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(73, 13);
             this.label2.TabIndex = 110;
-            this.label2.Text = "Nombre";
+            this.label2.Text = "Codigo Barras";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(57, 135);
+            this.label1.Location = new System.Drawing.Point(65, 115);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 109;
-            this.label1.Text = "Codigo";
+            this.label1.Text = "Codigo Interno";
             // 
             // dgvDatos
             // 
             this.dgvDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDatos.Location = new System.Drawing.Point(654, 91);
             this.dgvDatos.Name = "dgvDatos";
-            this.dgvDatos.Size = new System.Drawing.Size(377, 458);
+            this.dgvDatos.Size = new System.Drawing.Size(392, 634);
             this.dgvDatos.TabIndex = 108;
             this.dgvDatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDatos_CellContentClick);
             // 
@@ -234,18 +244,19 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 566);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 794);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1066, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1132, 22);
             this.statusStrip1.TabIndex = 107;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // txtExtras
+            // txtCaracteristicas
             // 
-            this.txtExtras.Location = new System.Drawing.Point(200, 386);
-            this.txtExtras.Name = "txtExtras";
-            this.txtExtras.Size = new System.Drawing.Size(141, 20);
-            this.txtExtras.TabIndex = 139;
+            this.txtCaracteristicas.Location = new System.Drawing.Point(200, 549);
+            this.txtCaracteristicas.Multiline = true;
+            this.txtCaracteristicas.Name = "txtCaracteristicas";
+            this.txtCaracteristicas.Size = new System.Drawing.Size(240, 99);
+            this.txtCaracteristicas.TabIndex = 139;
             // 
             // pctFoto
             // 
@@ -269,7 +280,7 @@
             // rdoActivo
             // 
             this.rdoActivo.AutoSize = true;
-            this.rdoActivo.Location = new System.Drawing.Point(200, 337);
+            this.rdoActivo.Location = new System.Drawing.Point(204, 496);
             this.rdoActivo.Name = "rdoActivo";
             this.rdoActivo.Size = new System.Drawing.Size(55, 17);
             this.rdoActivo.TabIndex = 142;
@@ -280,7 +291,7 @@
             // rdoInactivo
             // 
             this.rdoInactivo.AutoSize = true;
-            this.rdoInactivo.Location = new System.Drawing.Point(278, 337);
+            this.rdoInactivo.Location = new System.Drawing.Point(282, 496);
             this.rdoInactivo.Name = "rdoInactivo";
             this.rdoInactivo.Size = new System.Drawing.Size(63, 17);
             this.rdoInactivo.TabIndex = 143;
@@ -290,14 +301,14 @@
             // 
             // txtPrecio
             // 
-            this.txtPrecio.Location = new System.Drawing.Point(200, 252);
+            this.txtPrecio.Location = new System.Drawing.Point(200, 421);
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(141, 20);
             this.txtPrecio.TabIndex = 144;
             // 
             // txtStock
             // 
-            this.txtStock.Location = new System.Drawing.Point(200, 291);
+            this.txtStock.Location = new System.Drawing.Point(200, 460);
             this.txtStock.Name = "txtStock";
             this.txtStock.Size = new System.Drawing.Size(141, 20);
             this.txtStock.TabIndex = 145;
@@ -305,22 +316,115 @@
             // pctDocumento
             // 
             this.pctDocumento.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pctDocumento.Location = new System.Drawing.Point(459, 352);
+            this.pctDocumento.Location = new System.Drawing.Point(459, 355);
             this.pctDocumento.Name = "pctDocumento";
             this.pctDocumento.Size = new System.Drawing.Size(158, 89);
             this.pctDocumento.TabIndex = 146;
             this.pctDocumento.TabStop = false;
             this.pctDocumento.Click += new System.EventHandler(this.pctDocumento_Click);
             // 
+            // txtExtras
+            // 
+            this.txtExtras.Location = new System.Drawing.Point(200, 680);
+            this.txtExtras.Multiline = true;
+            this.txtExtras.Name = "txtExtras";
+            this.txtExtras.Size = new System.Drawing.Size(240, 99);
+            this.txtExtras.TabIndex = 147;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(65, 683);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(36, 13);
+            this.label7.TabIndex = 148;
+            this.label7.Text = "Extras";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(57, 389);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(31, 13);
+            this.label12.TabIndex = 150;
+            this.label12.Text = "Color";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(55, 355);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 13);
+            this.label8.TabIndex = 151;
+            this.label8.Text = "Modelo";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(53, 246);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(82, 13);
+            this.label13.TabIndex = 152;
+            this.label13.Text = "Tipo Dispositivo";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(59, 277);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(56, 13);
+            this.label14.TabIndex = 153;
+            this.label14.Text = "Proveedor";
+            // 
+            // txtColor
+            // 
+            this.txtColor.Location = new System.Drawing.Point(200, 382);
+            this.txtColor.Name = "txtColor";
+            this.txtColor.Size = new System.Drawing.Size(141, 20);
+            this.txtColor.TabIndex = 155;
+            // 
+            // txtModelo
+            // 
+            this.txtModelo.Location = new System.Drawing.Point(200, 348);
+            this.txtModelo.Name = "txtModelo";
+            this.txtModelo.Size = new System.Drawing.Size(141, 20);
+            this.txtModelo.TabIndex = 156;
+            // 
+            // cmbTipoDispositivo
+            // 
+            this.cmbTipoDispositivo.FormattingEnabled = true;
+            this.cmbTipoDispositivo.Location = new System.Drawing.Point(200, 237);
+            this.cmbTipoDispositivo.Name = "cmbTipoDispositivo";
+            this.cmbTipoDispositivo.Size = new System.Drawing.Size(145, 21);
+            this.cmbTipoDispositivo.TabIndex = 157;
+            // 
+            // cmbProveedor
+            // 
+            this.cmbProveedor.FormattingEnabled = true;
+            this.cmbProveedor.Location = new System.Drawing.Point(200, 277);
+            this.cmbProveedor.Name = "cmbProveedor";
+            this.cmbProveedor.Size = new System.Drawing.Size(145, 21);
+            this.cmbProveedor.TabIndex = 158;
+            // 
             // frmMantenimientoProducto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1066, 588);
+            this.ClientSize = new System.Drawing.Size(1132, 816);
+            this.Controls.Add(this.cmbProveedor);
+            this.Controls.Add(this.cmbTipoDispositivo);
+            this.Controls.Add(this.txtModelo);
+            this.Controls.Add(this.txtColor);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtExtras);
             this.Controls.Add(this.pctDocumento);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtExtras);
+            this.Controls.Add(this.txtCaracteristicas);
             this.Controls.Add(this.txtStock);
             this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.rdoInactivo);
@@ -330,8 +434,8 @@
             this.Controls.Add(this.label11);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.cmbMarca);
-            this.Controls.Add(this.txtNombreProducto);
-            this.Controls.Add(this.txtCodigo);
+            this.Controls.Add(this.txtCodigoBarras);
+            this.Controls.Add(this.txtCodigoInterno);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -340,6 +444,7 @@
             this.Controls.Add(this.dgvDatos);
             this.Controls.Add(this.statusStrip1);
             this.Name = "frmMantenimientoProducto";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMantenimientoProducto";
             this.Load += new System.EventHandler(this.frmMantenimientoProducto_Load);
             this.toolStrip1.ResumeLayout(false);
@@ -361,10 +466,9 @@
         private System.Windows.Forms.ToolStripButton btnEliminar;
         private System.Windows.Forms.ToolStripButton btnLimpiar;
         private System.Windows.Forms.ToolStripButton btnSalir;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbMarca;
-        private System.Windows.Forms.TextBox txtNombreProducto;
-        private System.Windows.Forms.TextBox txtCodigo;
+        private System.Windows.Forms.TextBox txtCodigoBarras;
+        private System.Windows.Forms.TextBox txtCodigoInterno;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -375,7 +479,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolTip toolTip2;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.TextBox txtExtras;
+        private System.Windows.Forms.TextBox txtCaracteristicas;
         private System.Windows.Forms.PictureBox pctFoto;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.RadioButton rdoActivo;
@@ -383,5 +487,16 @@
         private System.Windows.Forms.TextBox txtPrecio;
         private System.Windows.Forms.TextBox txtStock;
         private System.Windows.Forms.PictureBox pctDocumento;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtExtras;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtColor;
+        private System.Windows.Forms.TextBox txtModelo;
+        private System.Windows.Forms.ComboBox cmbTipoDispositivo;
+        private System.Windows.Forms.ComboBox cmbProveedor;
     }
 }

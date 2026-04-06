@@ -26,7 +26,8 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
 
         private void frmMantenimientoTipoDispositivo_Load(object sender, EventArgs e)
         {
-
+            CargarDatos();
+            
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -35,7 +36,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
             {
                 TipoDispositivo tipo = new TipoDispositivo();
 
-                tipo.IdTipoDispositivo = Convert.ToInt32(txtID_Dispositivo.Text);
+               // tipo.IdTipoDispositivo = Convert.ToInt32(txtID_Dispositivo.Text);
                 tipo.Descripcion = txtDescripcion.Text;
                 tipo.Estado = rdoActivo.Checked;
 
@@ -102,21 +103,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            if (dgvDatos.CurrentRow != null)
-            {
-                int id = Convert.ToInt32(dgvDatos.CurrentRow.Cells["IdTipoDispositivo"].Value);
-
-                bLLTipoDispositivo.DELETE(id);
-
-                MessageBox.Show("Tipo de dispositivo eliminado correctamente");
-
-                CargarDatos();
-                LimpiarCampos();
-            }
-            else
-            {
-                MessageBox.Show("Debe seleccionar un registro");
-            }
+            LimpiarCampos();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -156,6 +143,11 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
             bool estado = Convert.ToBoolean(row.Cells["Estado"].Value ?? false);
             rdoActivo.Checked = estado;
             rdoInactivo.Checked = !estado;
+        }
+
+        private void dgvDatos_SelectionChanged(object sender, EventArgs e)
+        {
+            CargarDesdeGrid();
         }
     }
 }

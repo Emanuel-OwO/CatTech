@@ -1,4 +1,5 @@
-﻿using Project_CatTech.Layer.Entities;
+﻿using log4net;
+using Project_CatTech.Layer.Entities;
 using Project_CatTech.Layer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ using System.Windows.Forms;
 
 namespace Project_CatTech.Layer.DAL
 {
-    public class DALCliente 
+    public class DALCliente : IDALCliente
     {
-        public static void CREATE(Cliente cliente)
+        private static readonly ILog _log = LogManager.GetLogger("MyControlEventos");
+
+        public  void CREATE(Cliente cliente)
         {
             try
             {
@@ -45,7 +48,7 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public static void UPDATE(Cliente cliente)
+        public  void UPDATE(Cliente cliente)
         {
             try
             {
@@ -77,7 +80,7 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public static void DELETE(int id)
+        public  void DELETE(int id)
         {
             try
             {
@@ -96,7 +99,7 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public static Cliente SelectById(int id)
+        public  Cliente SelectById(int id)
         {
             try
             {
@@ -141,7 +144,7 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
-        public static List<Cliente> SelectAll()
+        public  List<Cliente> SelectAll()
         {
             try
             {

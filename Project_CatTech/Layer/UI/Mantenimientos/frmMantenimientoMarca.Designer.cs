@@ -34,6 +34,10 @@
             this.rdoActivo = new System.Windows.Forms.RadioButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnAgregar = new System.Windows.Forms.ToolStripButton();
+            this.btnEliminar = new System.Windows.Forms.ToolStripButton();
+            this.btnEditar = new System.Windows.Forms.ToolStripButton();
+            this.btnLimpiar = new System.Windows.Forms.ToolStripButton();
+            this.btnSalir = new System.Windows.Forms.ToolStripButton();
             this.txtNombreMarca = new System.Windows.Forms.TextBox();
             this.txtIDMarca = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -43,10 +47,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnEliminar = new System.Windows.Forms.ToolStripButton();
-            this.btnEditar = new System.Windows.Forms.ToolStripButton();
-            this.btnLimpiar = new System.Windows.Forms.ToolStripButton();
-            this.btnSalir = new System.Windows.Forms.ToolStripButton();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCodigoMarca = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
@@ -99,64 +99,6 @@
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
-            // txtNombreMarca
-            // 
-            this.txtNombreMarca.Location = new System.Drawing.Point(161, 188);
-            this.txtNombreMarca.Name = "txtNombreMarca";
-            this.txtNombreMarca.Size = new System.Drawing.Size(124, 20);
-            this.txtNombreMarca.TabIndex = 114;
-            // 
-            // txtIDMarca
-            // 
-            this.txtIDMarca.Location = new System.Drawing.Point(161, 161);
-            this.txtIDMarca.Name = "txtIDMarca";
-            this.txtIDMarca.Size = new System.Drawing.Size(124, 20);
-            this.txtIDMarca.TabIndex = 113;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 246);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 13);
-            this.label4.TabIndex = 109;
-            this.label4.Text = "Estado";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 195);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 13);
-            this.label2.TabIndex = 107;
-            this.label2.Text = "Nombre Marca";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 133);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
-            this.label1.TabIndex = 106;
-            this.label1.Text = "Identificacion Marca";
-            // 
-            // dgvDatos
-            // 
-            this.dgvDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDatos.Location = new System.Drawing.Point(468, 86);
-            this.dgvDatos.Name = "dgvDatos";
-            this.dgvDatos.Size = new System.Drawing.Size(377, 434);
-            this.dgvDatos.TabIndex = 105;
-            this.dgvDatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDatos_CellContentClick);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 534);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(894, 22);
-            this.statusStrip1.TabIndex = 104;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
             // btnEliminar
             // 
             this.btnEliminar.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminar.Image")));
@@ -197,6 +139,65 @@
             this.btnSalir.Text = "Salir";
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
+            // txtNombreMarca
+            // 
+            this.txtNombreMarca.Location = new System.Drawing.Point(161, 188);
+            this.txtNombreMarca.Name = "txtNombreMarca";
+            this.txtNombreMarca.Size = new System.Drawing.Size(124, 20);
+            this.txtNombreMarca.TabIndex = 114;
+            // 
+            // txtIDMarca
+            // 
+            this.txtIDMarca.Location = new System.Drawing.Point(161, 126);
+            this.txtIDMarca.Name = "txtIDMarca";
+            this.txtIDMarca.Size = new System.Drawing.Size(124, 20);
+            this.txtIDMarca.TabIndex = 113;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(22, 246);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(40, 13);
+            this.label4.TabIndex = 109;
+            this.label4.Text = "Estado";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 195);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 13);
+            this.label2.TabIndex = 107;
+            this.label2.Text = "Nombre Marca";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(22, 133);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(103, 13);
+            this.label1.TabIndex = 106;
+            this.label1.Text = "Identificacion Marca";
+            // 
+            // dgvDatos
+            // 
+            this.dgvDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDatos.Location = new System.Drawing.Point(468, 86);
+            this.dgvDatos.Name = "dgvDatos";
+            this.dgvDatos.Size = new System.Drawing.Size(377, 434);
+            this.dgvDatos.TabIndex = 105;
+            this.dgvDatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDatos_CellContentClick);
+            this.dgvDatos.SelectionChanged += new System.EventHandler(this.dgvDatos_SelectionChanged);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 534);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(894, 22);
+            this.statusStrip1.TabIndex = 104;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -208,7 +209,7 @@
             // 
             // txtCodigoMarca
             // 
-            this.txtCodigoMarca.Location = new System.Drawing.Point(161, 130);
+            this.txtCodigoMarca.Location = new System.Drawing.Point(161, 157);
             this.txtCodigoMarca.Name = "txtCodigoMarca";
             this.txtCodigoMarca.Size = new System.Drawing.Size(124, 20);
             this.txtCodigoMarca.TabIndex = 127;

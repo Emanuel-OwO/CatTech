@@ -19,28 +19,32 @@ namespace Project_CatTech.Layer.DAL
         {
             string msg = "";
             string sql = @"INSERT INTO Producto 
-                          (CodigoInterno, CodigoBarras, IdModelo, IdProveedor, Color, Caracteristicas, Extras,
-                           DocumentoEspecificaciones, Foto, Precio, CantidadStock, Estado)
-                           VALUES 
-                          (@CodigoInterno, @CodigoBarras, @IdModelo, @IdProveedor, @Color, @Caracteristicas, @Extras,
-                           @Documento, @Foto, @Precio, @CantidadStock, @Estado)";
+                      (CodigoInterno, CodigoBarras, IdProveedor, Color, Caracteristicas, Extras,
+                       DocumentoEspecificaciones, Foto, Precio, CantidadStock, Estado,
+                       Modelo, IdMarca, IdTipoDispositivo)
+                       VALUES 
+                      (@CodigoInterno, @CodigoBarras, @IdProveedor, @Color, @Caracteristicas, @Extras,
+                       @Documento, @Foto, @Precio, @CantidadStock, @Estado,
+                       @Modelo, @IdMarca, @IdTipoDispositivo)";
 
             SqlCommand command = new SqlCommand();
 
             try
             {
                 command.Parameters.AddWithValue("@CodigoInterno", producto.CodigoInterno);
-                command.Parameters.AddWithValue("@CodigoBarras", producto.CodigoBarras);
-                command.Parameters.AddWithValue("@IdModelo", producto.IdModelo);
+                command.Parameters.AddWithValue("@CodigoBarras", producto.CodigoBarras ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@IdProveedor", producto.IdProveedor);
-                command.Parameters.AddWithValue("@Color", producto.Color);
-                command.Parameters.AddWithValue("@Caracteristicas", producto.Caracteristicas);
-                command.Parameters.AddWithValue("@Extras", producto.Extras);
+                command.Parameters.AddWithValue("@Color", producto.Color ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Caracteristicas", producto.Caracteristicas ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Extras", producto.Extras ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Documento", producto.DocumentoEspecificaciones ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Foto", producto.Foto ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Precio", producto.Precio);
                 command.Parameters.AddWithValue("@CantidadStock", producto.CantidadStock);
                 command.Parameters.AddWithValue("@Estado", producto.Estado);
+                command.Parameters.AddWithValue("@Modelo", producto.Modelo ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@IdMarca", producto.IdMarca);
+                command.Parameters.AddWithValue("@IdTipoDispositivo", producto.IdTipoDispositivo);
 
                 command.CommandText = sql;
                 command.CommandType = CommandType.Text;
@@ -60,14 +64,13 @@ namespace Project_CatTech.Layer.DAL
         public void DELETE(int id)
         {
             string msg = "";
-            string sql = @"DELETE FROM Producto WHERE IdProducto=@IdProducto";
+            string sql = @"UPDATE Producto SET Estado = 0 WHERE IdProducto = @IdProducto";
 
             SqlCommand command = new SqlCommand();
 
             try
             {
                 command.Parameters.AddWithValue("@IdProducto", id);
-
                 command.CommandText = sql;
                 command.CommandType = CommandType.Text;
 
@@ -89,12 +92,14 @@ namespace Project_CatTech.Layer.DAL
             DataSet ds = null;
             List<Producto> lista = new List<Producto>();
 
-            string sql = @"SELECT IdProducto, CodigoInterno, CodigoBarras, IdModelo, IdProveedor,
-                                  Color, Caracteristicas, Extras,
-                                  DocumentoEspecificaciones, Foto,
-                                  Precio, CantidadStock, Estado
-                           FROM Producto
-                           ORDER BY IdProducto";
+            string sql = @"SELECT IdProducto, CodigoInterno, CodigoBarras, IdProveedor,
+                              Color, Caracteristicas, Extras,
+                              DocumentoEspecificaciones, Foto,
+                              Precio, CantidadStock, Estado,
+                              Modelo, IdMarca, IdTipoDispositivo
+                       FROM Producto
+                       WHERE Estado = 1
+                       ORDER BY IdProducto";
 
             SqlCommand command = new SqlCommand();
 
@@ -115,8 +120,7 @@ namespace Project_CatTech.Layer.DAL
                         IdProducto = Convert.ToInt32(dr["IdProducto"]),
                         CodigoInterno = dr["CodigoInterno"].ToString(),
                         CodigoBarras = dr["CodigoBarras"].ToString(),
-                        IdModelo = Convert.ToInt32(dr["IdModelo"]),
-                        IdProveedor = Convert.ToInt32(dr["IdProveedor"]),
+                        IdProveedor = dr["IdProveedor"] == DBNull.Value ? 0 : Convert.ToInt32(dr["IdProveedor"]),
                         Color = dr["Color"].ToString(),
                         Caracteristicas = dr["Caracteristicas"].ToString(),
                         Extras = dr["Extras"].ToString(),
@@ -124,7 +128,10 @@ namespace Project_CatTech.Layer.DAL
                         Foto = dr["Foto"] == DBNull.Value ? null : (byte[])dr["Foto"],
                         Precio = Convert.ToDouble(dr["Precio"]),
                         CantidadStock = Convert.ToInt32(dr["CantidadStock"]),
-                        Estado = Convert.ToBoolean(dr["Estado"])
+                        Estado = Convert.ToBoolean(dr["Estado"]),
+                        Modelo = dr["Modelo"].ToString(),
+                        IdMarca = dr["IdMarca"] == DBNull.Value ? 0 : Convert.ToInt32(dr["IdMarca"]),
+                        IdTipoDispositivo = dr["IdTipoDispositivo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["IdTipoDispositivo"])
                     };
 
                     lista.Add(p);
@@ -145,12 +152,13 @@ namespace Project_CatTech.Layer.DAL
             DataSet ds = null;
             Producto p = null;
 
-            string sql = @"SELECT IdProducto, CodigoInterno, CodigoBarras, IdModelo, IdProveedor,
-                                  Color, Caracteristicas, Extras,
-                                  DocumentoEspecificaciones, Foto,
-                                  Precio, CantidadStock, Estado
-                           FROM Producto
-                           WHERE IdProducto=@IdProducto";
+            string sql = @"SELECT IdProducto, CodigoInterno, CodigoBarras, IdProveedor,
+                              Color, Caracteristicas, Extras,
+                              DocumentoEspecificaciones, Foto,
+                              Precio, CantidadStock, Estado,
+                              Modelo, IdMarca, IdTipoDispositivo
+                       FROM Producto
+                       WHERE IdProducto = @IdProducto";
 
             SqlCommand command = new SqlCommand();
 
@@ -174,8 +182,7 @@ namespace Project_CatTech.Layer.DAL
                         IdProducto = Convert.ToInt32(dr["IdProducto"]),
                         CodigoInterno = dr["CodigoInterno"].ToString(),
                         CodigoBarras = dr["CodigoBarras"].ToString(),
-                        IdModelo = Convert.ToInt32(dr["IdModelo"]),
-                        IdProveedor = Convert.ToInt32(dr["IdProveedor"]),
+                        IdProveedor = dr["IdProveedor"] == DBNull.Value ? 0 : Convert.ToInt32(dr["IdProveedor"]),
                         Color = dr["Color"].ToString(),
                         Caracteristicas = dr["Caracteristicas"].ToString(),
                         Extras = dr["Extras"].ToString(),
@@ -183,7 +190,10 @@ namespace Project_CatTech.Layer.DAL
                         Foto = dr["Foto"] == DBNull.Value ? null : (byte[])dr["Foto"],
                         Precio = Convert.ToDouble(dr["Precio"]),
                         CantidadStock = Convert.ToInt32(dr["CantidadStock"]),
-                        Estado = Convert.ToBoolean(dr["Estado"])
+                        Estado = Convert.ToBoolean(dr["Estado"]),
+                        Modelo = dr["Modelo"].ToString(),
+                        IdMarca = dr["IdMarca"] == DBNull.Value ? 0 : Convert.ToInt32(dr["IdMarca"]),
+                        IdTipoDispositivo = dr["IdTipoDispositivo"] == DBNull.Value ? 0 : Convert.ToInt32(dr["IdTipoDispositivo"])
                     };
                 }
 
@@ -200,19 +210,21 @@ namespace Project_CatTech.Layer.DAL
         {
             string msg = "";
             string sql = @"UPDATE Producto 
-                           SET CodigoInterno=@CodigoInterno,
-                               CodigoBarras=@CodigoBarras,
-                               IdModelo=@IdModelo,
-                               IdProveedor=@IdProveedor,
-                               Color=@Color,
-                               Caracteristicas=@Caracteristicas,
-                               Extras=@Extras,
-                               DocumentoEspecificaciones=@Documento,
-                               Foto=@Foto,
-                               Precio=@Precio,
-                               CantidadStock=@CantidadStock,
-                               Estado=@Estado
-                           WHERE IdProducto=@IdProducto";
+                       SET CodigoInterno    = @CodigoInterno,
+                           CodigoBarras     = @CodigoBarras,
+                           IdProveedor      = @IdProveedor,
+                           Color            = @Color,
+                           Caracteristicas  = @Caracteristicas,
+                           Extras           = @Extras,
+                           DocumentoEspecificaciones = @Documento,
+                           Foto             = @Foto,
+                           Precio           = @Precio,
+                           CantidadStock    = @CantidadStock,
+                           Estado           = @Estado,
+                           Modelo           = @Modelo,
+                           IdMarca          = @IdMarca,
+                           IdTipoDispositivo = @IdTipoDispositivo
+                       WHERE IdProducto = @IdProducto";
 
             SqlCommand command = new SqlCommand();
 
@@ -220,17 +232,19 @@ namespace Project_CatTech.Layer.DAL
             {
                 command.Parameters.AddWithValue("@IdProducto", producto.IdProducto);
                 command.Parameters.AddWithValue("@CodigoInterno", producto.CodigoInterno);
-                command.Parameters.AddWithValue("@CodigoBarras", producto.CodigoBarras);
-                command.Parameters.AddWithValue("@IdModelo", producto.IdModelo);
+                command.Parameters.AddWithValue("@CodigoBarras", producto.CodigoBarras ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@IdProveedor", producto.IdProveedor);
-                command.Parameters.AddWithValue("@Color", producto.Color);
-                command.Parameters.AddWithValue("@Caracteristicas", producto.Caracteristicas);
-                command.Parameters.AddWithValue("@Extras", producto.Extras);
+                command.Parameters.AddWithValue("@Color", producto.Color ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Caracteristicas", producto.Caracteristicas ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Extras", producto.Extras ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Documento", producto.DocumentoEspecificaciones ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Foto", producto.Foto ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Precio", producto.Precio);
                 command.Parameters.AddWithValue("@CantidadStock", producto.CantidadStock);
                 command.Parameters.AddWithValue("@Estado", producto.Estado);
+                command.Parameters.AddWithValue("@Modelo", producto.Modelo ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@IdMarca", producto.IdMarca);
+                command.Parameters.AddWithValue("@IdTipoDispositivo", producto.IdTipoDispositivo);
 
                 command.CommandText = sql;
                 command.CommandType = CommandType.Text;

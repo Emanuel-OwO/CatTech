@@ -11,17 +11,19 @@ namespace Project_CatTech.Layer.BLL
 {
     public class BLLCliente : IBLLCliente
     {
+        private IDALCliente _dal = new DALCliente();
+
         public void INSERT(Cliente cliente)
         {
             if (!string.IsNullOrEmpty(cliente.Identificacion))
             {
                 if (Existe(cliente.Identificacion))
                 {
-                    DALCliente.UPDATE(cliente);
+                    _dal.UPDATE(cliente);
                 }
                 else
                 {
-                    DALCliente.CREATE(cliente);
+                    _dal.CREATE(cliente);
                 }
             }
         }
@@ -30,7 +32,7 @@ namespace Project_CatTech.Layer.BLL
         {
             if (cliente.IdCliente > 0)
             {
-                DALCliente.UPDATE(cliente);
+                _dal.UPDATE(cliente);
             }
         }
 
@@ -38,23 +40,23 @@ namespace Project_CatTech.Layer.BLL
         {
             if (id > 0)
             {
-                DALCliente.DELETE(id);
+                _dal.DELETE(id);
             }
         }
 
         public List<Cliente> SELECTALL()
         {
-            return DALCliente.SelectAll();
+            return _dal.SelectAll();
         }
 
         public Cliente SELECTBYID(int id)
         {
-            return DALCliente.SelectById(id);
+            return _dal.SelectById(id);
         }
 
         private bool Existe(string identificacion)
         {
-            var lista = DALCliente.SelectAll();
+            var lista = _dal.SelectAll();
 
             if (lista == null) return false; 
 

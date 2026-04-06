@@ -45,5 +45,19 @@ namespace Project_CatTech
             frmMantenimientoTipoDispositivo.MdiParent = this;
             frmMantenimientoTipoDispositivo.Show();
         }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            frmMantenimientoProveedor frmMantenimientoProveedor = new frmMantenimientoProveedor();
+            frmMantenimientoProveedor.MdiParent = this;
+            frmMantenimientoProveedor.Show();
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            frmMantenimientoStock frmMantenimientoStock = new frmMantenimientoStock();
+            frmMantenimientoStock.MdiParent = this;
+            frmMantenimientoStock.Show();
+        }
     }
 }
