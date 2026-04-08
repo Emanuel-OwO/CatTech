@@ -39,7 +39,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
             CargarDatos();
             CargarCombos();
             CargarDesdeGrid();
-
+            txtStock.ReadOnly = true;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -60,7 +60,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
                 producto.IdProveedor = Convert.ToInt32(cmbProveedor.SelectedValue);
 
                 producto.Precio = Convert.ToDouble(txtPrecio.Text);
-                producto.CantidadStock = Convert.ToInt32(txtStock.Text);
+                producto.CantidadStock = 0;
                 producto.Estado = rdoActivo.Checked;
 
                 producto.Foto = pctFoto.Tag != null ? (byte[])pctFoto.Tag : null;
@@ -221,7 +221,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
                     // Leer todo el archivo de bytes
                     byte[] cadenaBytes = File.ReadAllBytes(opt.FileName);
                     this.pctDocumento.Tag = cadenaBytes;
-                    this.pctDocumento.Image = Project_CatTech.Properties.Resources.MSWordAcepted;
+               //     this.pctDocumento.Image = Project_CatTech.Properties.Resources.MSWordAcepted;
                 }
             }
             catch (SqlException sqlError)
@@ -247,6 +247,8 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
 
             if (dgvDatos.Columns["DocumentoEspecificaciones"] != null)
                 dgvDatos.Columns["DocumentoEspecificaciones"].Visible = false;
+
+
         }
 
         private void LimpiarCampos()
@@ -256,6 +258,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
             txtCaracteristicas.Clear();
             txtPrecio.Clear();
             txtStock.Clear();
+            txtStock.Text = "0";
 
             cmbMarca.SelectedIndex = -1;
 
@@ -316,7 +319,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
                 // Mostrar Documento (icono Word si tiene archivo)
                 if (p.DocumentoEspecificaciones != null && p.DocumentoEspecificaciones.Length > 0)
                 {
-                    pctDocumento.Image = Project_CatTech.Properties.Resources.MSWordAcepted;
+                 //   pctDocumento.Image = Project_CatTech.Properties.Resources.MSWordAcepted;
                     pctDocumento.Tag = p.DocumentoEspecificaciones;
                 }
                 else

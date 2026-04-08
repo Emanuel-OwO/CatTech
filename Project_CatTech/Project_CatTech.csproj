@@ -97,6 +97,7 @@
     <Compile Include="Layer\BLL\BLLProvincia.cs" />
     <Compile Include="Layer\BLL\BLLStock.cs" />
     <Compile Include="Layer\BLL\BLLTipoDispositivo.cs" />
+    <Compile Include="Layer\BLL\BLLUsuario.cs" />
     <Compile Include="Layer\DAL\DALCliente.cs" />
     <Compile Include="Layer\DAL\DALMarca.cs" />
     <Compile Include="Layer\DAL\DALProducto.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Layer\DAL\DALProvincia.cs" />
     <Compile Include="Layer\DAL\DALStock.cs" />
     <Compile Include="Layer\DAL\DALTipoDispositivo.cs" />
+    <Compile Include="Layer\DAL\DALUsuario.cs" />
     <Compile Include="Layer\Entities\Cliente.cs" />
     <Compile Include="Layer\Entities\Marca.cs" />
     <Compile Include="Layer\Entities\PadronElectoral.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Layer\Entities\Provincia.cs" />
     <Compile Include="Layer\Entities\Stock.cs" />
     <Compile Include="Layer\Entities\TipoDispositivo.cs" />
+    <Compile Include="Layer\Entities\Usuario.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLCliente.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLMarca.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLPadron.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="Layer\Interfaces\IBLL\IBLLProveedor.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLStock.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLTipoDispositivo.cs" />
+    <Compile Include="Layer\Interfaces\IBLL\IBLLUsuario.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALCliente.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALMarca.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProducto.cs" />
@@ -126,15 +130,28 @@
     <Compile Include="Layer\Interfaces\IDAL\IDALProvincia.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALStock.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALTipoDispositivo.cs" />
+    <Compile Include="Layer\Interfaces\IDAL\IDALUsuario.cs" />
     <Compile Include="Layer\Persistencia\DataBase.cs" />
     <Compile Include="Layer\Persistencia\FactoryConexion.cs" />
     <Compile Include="Layer\Persistencia\FactoryDataBase.cs" />
     <Compile Include="Layer\Persistencia\IDataBase.cs" />
+    <Compile Include="Layer\UI\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Layer\UI\frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Layer\UI\frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Login\frmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Login\frmUsuario.Designer.cs">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoCliente.cs">
       <SubType>Form</SubType>
@@ -188,8 +205,14 @@
     <Compile Include="Util\UtilError.cs" />
     <Compile Include="Util\Utilitarios.cs" />
     <Compile Include="Util\Utils.cs" />
+    <EmbeddedResource Include="Layer\UI\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Layer\UI\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Login\frmUsuario.resx">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoCliente.resx">
       <DependentUpon>frmMantenimientoCliente.cs</DependentUpon>
@@ -220,6 +243,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -238,8 +262,12 @@
   <ItemGroup>
     <Folder Include="Document\" />
     <Folder Include="Factories\" />
+    <Folder Include="Layer\UI\BCCR\" />
     <Folder Include="Layer\UI\Reportes\" />
     <Folder Include="Layer\UI\Seguridad\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\encendido.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" />

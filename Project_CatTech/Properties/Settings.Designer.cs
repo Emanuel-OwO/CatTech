@@ -26,5 +26,51 @@ namespace Project_CatTech.Properties
                 return defaultInstance;
             }
         }
+
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Login
+        {
+            get
+            {
+                return ((string)(this["Login"]));
+            }
+            set
+            {
+                this["Login"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Nombre
+        {
+            get
+            {
+                return ((string)(this["Nombre"]));
+            }
+            set
+            {
+                this["Nombre"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RolId
+        {
+            get
+            {
+                return ((string)(this["RolId"]));
+            }
+            set
+            {
+                this["RolId"] = value;
+            }
+        }
     }
 }
