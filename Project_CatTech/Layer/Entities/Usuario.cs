@@ -15,6 +15,7 @@ namespace Project_CatTech.Layer.Entities
         public string PrimerApellido { set; get; }
         public string SegundoApellido { set; get; }
         public int IdPerfil { set; get; }
+        public string Perfil { get; set; }
         public bool Estado { set; get; }
 
     }

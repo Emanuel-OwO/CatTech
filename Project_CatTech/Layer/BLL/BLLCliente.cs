@@ -13,6 +13,14 @@ namespace Project_CatTech.Layer.BLL
     {
         private IDALCliente _dal = new DALCliente();
 
+        public void DELETE(int id)
+        {
+            if (id > 0)
+            {
+                _dal.DELETE(id);
+            }
+        }
+
         public void INSERT(Cliente cliente)
         {
             if (!string.IsNullOrEmpty(cliente.Identificacion))
@@ -28,6 +36,11 @@ namespace Project_CatTech.Layer.BLL
             }
         }
 
+        public List<Cliente> SELECTALL()
+        {
+            return _dal.SelectAll();
+        }
+
         public void UPDATE(Cliente cliente)
         {
             if (cliente.IdCliente > 0)
@@ -35,30 +48,15 @@ namespace Project_CatTech.Layer.BLL
                 _dal.UPDATE(cliente);
             }
         }
-
-        public void DELETE(int id)
-        {
-            if (id > 0)
-            {
-                _dal.DELETE(id);
-            }
-        }
-
-        public List<Cliente> SELECTALL()
-        {
-            return _dal.SelectAll();
-        }
-
         public Cliente SELECTBYID(int id)
         {
             return _dal.SelectById(id);
         }
-
         private bool Existe(string identificacion)
         {
             var lista = _dal.SelectAll();
 
-            if (lista == null) return false; 
+            if (lista == null) return false;
 
             foreach (var c in lista)
             {
@@ -70,4 +68,3 @@ namespace Project_CatTech.Layer.BLL
         }
     }
 }
-

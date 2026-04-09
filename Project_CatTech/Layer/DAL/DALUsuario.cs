@@ -23,7 +23,6 @@ namespace Project_CatTech.Layer.DAL
                 {
                     var command = new SqlCommand("sp_Usuario_Eliminar");
                     command.Parameters.AddWithValue("@IdUsuario", idUsuario);
-
                     command.CommandType = CommandType.StoredProcedure;
                     db.ExecuteNonQuery(command);
                 }
@@ -42,15 +41,12 @@ namespace Project_CatTech.Layer.DAL
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
                     var command = new SqlCommand("sp_Usuario_Insertar");
-
                     command.Parameters.AddWithValue("@NombreUsuario", usuario.NombreUsuario);
                     command.Parameters.AddWithValue("@Clave", usuario.Clave);
                     command.Parameters.AddWithValue("@Nombre", usuario.Nombre);
                     command.Parameters.AddWithValue("@PrimerApellido", usuario.PrimerApellido);
                     command.Parameters.AddWithValue("@SegundoApellido", usuario.SegundoApellido);
                     command.Parameters.AddWithValue("@IdPerfil", usuario.IdPerfil);
-                    command.Parameters.AddWithValue("@Estado", usuario.Estado);
-
                     command.CommandType = CommandType.StoredProcedure;
                     db.ExecuteNonQuery(command);
                 }
@@ -66,37 +62,28 @@ namespace Project_CatTech.Layer.DAL
         {
             try
             {
-                DataSet ds = null;
-
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    var command = new SqlCommand("usp_LOGIN_Usuario");
-
+                    var command = new SqlCommand("sp_Usuario_Login"); // ← CORREGIDO
                     command.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
                     command.Parameters.AddWithValue("@Clave", clave);
                     command.CommandType = CommandType.StoredProcedure;
+                    var ds = db.ExecuteReader(command, "Usuario");
 
-                    ds = db.ExecuteReader(command, "Usuario");
+                    if (ds.Tables[0].Rows.Count == 0) return null;
+                    DataRow dr = ds.Tables[0].Rows[0];
+                    return new Usuario
+                    {
+                        IdUsuario = Convert.ToInt32(dr["IdUsuario"]),
+                        NombreUsuario = dr["NombreUsuario"].ToString(),
+                        Clave = dr["Clave"].ToString(),
+                        Nombre = dr["Nombre"].ToString(),
+                        PrimerApellido = dr["Apellidos"].ToString(),
+                        IdPerfil = Convert.ToInt32(dr["IdPerfil"]),
+                        Perfil = dr["Perfil"].ToString(),
+                        Estado = Convert.ToBoolean(dr["Estado"])
+                    };
                 }
-
-                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                {
-                    DataTable dt = ds.Tables[0];
-
-                    Usuario usuario = new Usuario();
-
-                    usuario.IdUsuario = Convert.ToInt32(dt.Rows[0]["IdUsuario"]);
-                    usuario.NombreUsuario = dt.Rows[0]["NombreUsuario"].ToString();
-                    usuario.Clave = dt.Rows[0]["Clave"].ToString();
-                    usuario.Nombre = dt.Rows[0]["Nombre"].ToString();
-                    usuario.PrimerApellido = dt.Rows[0]["Apellidos"].ToString();
-                    usuario.IdPerfil = Convert.ToInt32(dt.Rows[0]["IdPerfil"]);
-                    usuario.Estado = Convert.ToBoolean(dt.Rows[0]["Estado"]);
-
-                    return usuario;
-                }
-
-                return null;
             }
             catch (Exception er)
             {
@@ -109,34 +96,30 @@ namespace Project_CatTech.Layer.DAL
         {
             try
             {
-                DataSet ds = null;
-
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
                     var command = new SqlCommand("sp_Usuario_ObtenerTodos");
                     command.CommandType = CommandType.StoredProcedure;
+                    var ds = db.ExecuteReader(command, "Usuario");
 
-                    ds = db.ExecuteReader(command, "Usuario");
+                    var lista = new List<Usuario>();
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        lista.Add(new Usuario
+                        {
+                            IdUsuario = Convert.ToInt32(dr["IdUsuario"]),
+                            NombreUsuario = dr["NombreUsuario"].ToString(),
+                            Clave = dr["Clave"].ToString(),
+                            Nombre = dr["Nombre"].ToString(),
+                            PrimerApellido = dr["PrimerApellido"].ToString(),
+                            SegundoApellido = dr["SegundoApellido"].ToString(),
+                            IdPerfil = Convert.ToInt32(dr["IdPerfil"]),
+                            Perfil = dr["Perfil"].ToString(),
+                            Estado = Convert.ToBoolean(dr["Estado"])
+                        });
+                    }
+                    return lista;
                 }
-
-                List<Usuario> lista = new List<Usuario>();
-
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    Usuario u = new Usuario();
-                    u.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
-                    u.NombreUsuario = dr["NombreUsuario"].ToString();
-                    u.Clave = dr["Clave"].ToString();
-                    u.Nombre = dr["Nombre"].ToString();
-                    u.PrimerApellido = dr["PrimerApellido"].ToString();
-                    u.SegundoApellido = dr["SegundoApellido"].ToString();
-                    u.IdPerfil = Convert.ToInt32(dr["IdPerfil"]);
-                    u.Estado = Convert.ToBoolean(dr["Estado"]);
-
-                    lista.Add(u);
-                }
-
-                return lista;
             }
             catch (Exception er)
             {
@@ -150,35 +133,28 @@ namespace Project_CatTech.Layer.DAL
         {
             try
             {
-                DataSet ds = null;
-
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
                     var command = new SqlCommand("sp_Usuario_ObtenerPorId");
                     command.Parameters.AddWithValue("@IdUsuario", idUsuario);
                     command.CommandType = CommandType.StoredProcedure;
+                    var ds = db.ExecuteReader(command, "Usuario");
 
-                    ds = db.ExecuteReader(command, "Usuario");
-                }
-
-                if (ds.Tables[0].Rows.Count > 0)
-                {
+                    if (ds.Tables[0].Rows.Count == 0) return null;
                     DataRow dr = ds.Tables[0].Rows[0];
-
-                    Usuario u = new Usuario();
-                    u.IdUsuario = Convert.ToInt32(dr["IdUsuario"]);
-                    u.NombreUsuario = dr["NombreUsuario"].ToString();
-                    u.Clave = dr["Clave"].ToString();
-                    u.Nombre = dr["Nombre"].ToString();
-                    u.PrimerApellido = dr["PrimerApellido"].ToString();
-                    u.SegundoApellido = dr["SegundoApellido"].ToString();
-                    u.IdPerfil = Convert.ToInt32(dr["IdPerfil"]);
-                    u.Estado = Convert.ToBoolean(dr["Estado"]);
-
-                    return u;
+                    return new Usuario
+                    {
+                        IdUsuario = Convert.ToInt32(dr["IdUsuario"]),
+                        NombreUsuario = dr["NombreUsuario"].ToString(),
+                        Clave = dr["Clave"].ToString(),
+                        Nombre = dr["Nombre"].ToString(),
+                        PrimerApellido = dr["PrimerApellido"].ToString(),
+                        SegundoApellido = dr["SegundoApellido"].ToString(),
+                        IdPerfil = Convert.ToInt32(dr["IdPerfil"]),
+                        Perfil = dr["Perfil"].ToString(),
+                        Estado = Convert.ToBoolean(dr["Estado"])
+                    };
                 }
-
-                return null;
             }
             catch (Exception er)
             {
@@ -195,16 +171,14 @@ namespace Project_CatTech.Layer.DAL
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
                     var command = new SqlCommand("sp_Usuario_Actualizar");
-
                     command.Parameters.AddWithValue("@IdUsuario", usuario.IdUsuario);
                     command.Parameters.AddWithValue("@NombreUsuario", usuario.NombreUsuario);
-                    command.Parameters.AddWithValue("@Clave", usuario.Clave);
+                    command.Parameters.AddWithValue("@Clave", usuario.Clave);  // ← AGREGADO
                     command.Parameters.AddWithValue("@Nombre", usuario.Nombre);
                     command.Parameters.AddWithValue("@PrimerApellido", usuario.PrimerApellido);
                     command.Parameters.AddWithValue("@SegundoApellido", usuario.SegundoApellido);
                     command.Parameters.AddWithValue("@IdPerfil", usuario.IdPerfil);
                     command.Parameters.AddWithValue("@Estado", usuario.Estado);
-
                     command.CommandType = CommandType.StoredProcedure;
                     db.ExecuteNonQuery(command);
                 }
@@ -215,5 +189,22 @@ namespace Project_CatTech.Layer.DAL
                 MessageBox.Show(er.Message);
             }
         }
+
+        public DataTable SELECT_ALL_PERFILES()
+        {
+            try
+            {
+                using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+                {
+                    var command = new SqlCommand("sp_Perfil_ObtenerTodos");
+                    command.CommandType = CommandType.StoredProcedure;
+                    var ds = db.ExecuteReader(command, "Perfiles");
+                    return ds.Tables[0];
+                }
+            }
+            catch (Exception er) { _log.Error("Error SELECT_ALL_PERFILES", er); throw; }
+        }
+
+
     }
 }
