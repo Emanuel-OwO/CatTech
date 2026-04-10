@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_CatTech.Layer.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,17 @@ namespace Project_CatTech
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmPrincipal());
+            //Application.Run(new frmPrincipal());
+
+            frmLogin frmLogin = new frmLogin();
+
+            frmLogin.ShowDialog();
+
+            if (frmLogin.DialogResult == DialogResult.OK)
+            {
+                Application.Run(new frmPrincipal());
+            }
+
         }
     }
 }

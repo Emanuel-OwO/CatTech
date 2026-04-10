@@ -1,5 +1,7 @@
-﻿using Project_CatTech.Layer.UI.Login;
+﻿using Project_CatTech.Layer.UI.FrmBCCR;
+using Project_CatTech.Layer.UI.Login;
 using Project_CatTech.Layer.UI.Mantenimientos;
+using Project_CatTech.Layer.UI.Procesos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,6 +68,20 @@ namespace Project_CatTech
             frmUsuario frmUsuario = new frmUsuario();
             frmUsuario.MdiParent = this;
             frmUsuario.Show();
+        }
+
+        private void toolStripMenuItemFactura_Click(object sender, EventArgs e)
+        {
+            frmFactura frmFactura = new frmFactura();   
+            frmFactura.MdiParent = this;
+            frmFactura.Show();
+        }
+
+        private void toolStripMenuItemConsultarDolar_Click(object sender, EventArgs e)
+        {
+            frmDolar frmDolar = new frmDolar();
+            frmDolar.MdiParent = this;
+            frmDolar.Show();
         }
     }
 }
