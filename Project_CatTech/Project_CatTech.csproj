@@ -98,6 +98,7 @@
     <Compile Include="Enums\TipoGenero.cs" />
     <Compile Include="Layer\BLL\BLLCliente.cs" />
     <Compile Include="Layer\BLL\BLLDolar.cs" />
+    <Compile Include="Layer\BLL\BLLFactura.cs" />
     <Compile Include="Layer\BLL\BLLMarca.cs" />
     <Compile Include="Layer\BLL\BLLPadron.cs" />
     <Compile Include="Layer\BLL\BLLProducto.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Layer\BLL\BLLTipoDispositivo.cs" />
     <Compile Include="Layer\BLL\BLLUsuario.cs" />
     <Compile Include="Layer\DAL\DALCliente.cs" />
+    <Compile Include="Layer\DAL\DALFactura.cs" />
     <Compile Include="Layer\DAL\DALMarca.cs" />
     <Compile Include="Layer\DAL\DALProducto.cs" />
     <Compile Include="Layer\DAL\DALProveedor.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Layer\Entities\Usuario.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLCliente.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLDolar.cs" />
+    <Compile Include="Layer\Interfaces\IBLL\IBLLFactura.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLMarca.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLPadron.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLProducto.cs" />
@@ -142,6 +145,7 @@
     <Compile Include="Layer\Interfaces\IBLL\IBLLTipoDispositivo.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLUsuario.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALCliente.cs" />
+    <Compile Include="Layer\Interfaces\IDAL\IDALFactura.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALMarca.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProducto.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProveedor.cs" />
@@ -153,6 +157,18 @@
     <Compile Include="Layer\Persistencia\FactoryConexion.cs" />
     <Compile Include="Layer\Persistencia\FactoryDataBase.cs" />
     <Compile Include="Layer\Persistencia\IDataBase.cs" />
+    <Compile Include="Layer\UI\Filtros\frmFiltroCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Filtros\frmFiltroCliente.Designer.cs">
+      <DependentUpon>frmFiltroCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Filtros\frmFiltroProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Filtros\frmFiltroProducto.Designer.cs">
+      <DependentUpon>frmFiltroProducto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Layer\UI\FrmBCCR\frmDolar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -229,6 +245,12 @@
     <Compile Include="Util\UtilError.cs" />
     <Compile Include="Util\Utilitarios.cs" />
     <Compile Include="Util\Utils.cs" />
+    <EmbeddedResource Include="Layer\UI\Filtros\frmFiltroCliente.resx">
+      <DependentUpon>frmFiltroCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Filtros\frmFiltroProducto.resx">
+      <DependentUpon>frmFiltroProducto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Layer\UI\FrmBCCR\frmDolar.resx">
       <DependentUpon>frmDolar.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,7 +313,6 @@
   <ItemGroup>
     <Folder Include="Document\" />
     <Folder Include="Factories\" />
-    <Folder Include="Layer\UI\Filtros\" />
     <Folder Include="Layer\UI\Reportes\" />
     <Folder Include="Layer\UI\Seguridad\" />
   </ItemGroup>
