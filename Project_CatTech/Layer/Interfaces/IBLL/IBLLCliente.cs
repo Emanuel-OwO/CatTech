@@ -13,5 +13,6 @@ namespace Project_CatTech.Layer.Interfaces
         void UPDATE(Cliente cliente);
         void DELETE(int id);
         List<Cliente> SELECTALL();
+        List<Cliente> Get_By_Filter(string pDescripcion);
     }
 }

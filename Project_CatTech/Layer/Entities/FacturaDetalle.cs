@@ -12,8 +12,8 @@ namespace Project_CatTech.Layer.Entities
         public int IdFactura { set; get; }
         public int IdProducto { set; get; }
         public int Cantidad { set; get; }
-        public double Precio { set; get; }
-        public double Subtotal { set; get; }
+        public decimal Precio { set; get; }
+        public decimal Subtotal { set; get; }
 
     }
 }

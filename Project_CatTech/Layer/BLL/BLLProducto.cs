@@ -32,6 +32,11 @@ namespace Project_CatTech.Layer.BLL
             dal.DELETE(id);
         }
 
+        public List<Producto> Get_By_Filter(string filtro)
+        {
+            return dal.Get_By_Filter(filtro);
+        }
+
         public List<Producto> SelectAll()
         {
             return dal.SelectAll();

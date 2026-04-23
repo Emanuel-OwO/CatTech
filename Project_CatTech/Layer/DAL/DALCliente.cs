@@ -187,6 +187,43 @@ namespace Project_CatTech.Layer.DAL
                 return null;
             }
         }
+
+        public List<Cliente> Get_By_Filter(string pDescripcion)
+        {
+            try
+            {
+                using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+                {
+                    var command = new SqlCommand("sp_Cliente_Buscar");
+                    command.Parameters.AddWithValue("@Filtro", pDescripcion ?? "");
+                    command.CommandType = CommandType.StoredProcedure;
+                    var ds = db.ExecuteReader(command, "Cliente");
+
+                    var lista = new List<Cliente>();
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        lista.Add(new Cliente
+                        {
+                            IdCliente = Convert.ToInt32(dr["IdCliente"]),
+                            TipoIdentificacion = dr["TipoIdentificacion"].ToString(),
+                            Identificacion = dr["Identificacion"].ToString(),
+                            Nombre = dr["Nombre"].ToString(),
+                            PrimerApellido = dr["PrimerApellido"].ToString(),
+                            SegundoApellido = dr["SegundoApellido"].ToString(),
+                            Telefono = dr["Telefono"].ToString(),
+                            Correo = dr["Correo"].ToString(),
+                            Estado = Convert.ToBoolean(dr["Estado"])
+                        });
+                    }
+                    return lista;
+                }
+            }
+            catch (Exception er)
+            {
+                _log.Error("Error Get_By_Filter Cliente", er);
+                throw;
+            }
+        }
     }
 }
 

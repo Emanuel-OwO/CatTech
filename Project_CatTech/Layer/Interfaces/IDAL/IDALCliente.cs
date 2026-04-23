@@ -9,10 +9,11 @@ namespace Project_CatTech.Layer.Interfaces
 {
     public interface IDALCliente
     {
-            void CREATE(Cliente cliente);
-            void UPDATE(Cliente cliente);
-            void DELETE(int id);
-            List<Cliente> SelectAll();
-            Cliente SelectById(int id);
+        void CREATE(Cliente cliente);
+        void UPDATE(Cliente cliente);
+        void DELETE(int id);
+        List<Cliente> SelectAll();
+        Cliente SelectById(int id);
+        List<Cliente> Get_By_Filter(string pDescripcion);
     }
 }

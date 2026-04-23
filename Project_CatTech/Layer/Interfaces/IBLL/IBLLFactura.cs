@@ -9,11 +9,25 @@ namespace Project_CatTech.Layer.Interfaces.IBLL
 {
     public interface IBLLFactura
     {
-        Factura Save(Factura pfactura);
-        int GetNextNumeroFactura();
-        int GetPrevNumeroFactura();
-        double CalcularTax(double precio,int cantidad);
+        Factura GetById(int pIdFactura);
+        List<Factura> GetAll();
+        int Save(Factura factura);
+        bool Delete(int pIdFactura);
+        bool Update(Factura factura);
 
-        Task<Factura> Save(DateTime pFechaInicial,DateTime pFechaFinal);
+
+
+        decimal CalcularSubTotal(List<FacturaDetalle> listaDetalle);
+        decimal CalcularIVA(decimal subTotal);
+        decimal CalcularTotalColones(decimal subTotal,decimal impuesto);
+        decimal CalcularTotalDolares(decimal totalColones, decimal tipoCambio);
+
+
+
+
+        void UpdateNumFactura(int idFactura, string numFactura);
+        void UpdateXMLFactura(int idFactura, string xmlFactura);
+
+
     }
 }

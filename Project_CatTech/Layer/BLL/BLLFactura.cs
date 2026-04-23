@@ -1,5 +1,7 @@
-﻿using Project_CatTech.Layer.Entities;
+﻿using Project_CatTech.Layer.DAL;
+using Project_CatTech.Layer.Entities;
 using Project_CatTech.Layer.Interfaces.IBLL;
+using Project_CatTech.Layer.Interfaces.IDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +12,117 @@ namespace Project_CatTech.Layer.BLL
 {
     public class BLLFactura : IBLLFactura
     {
-        public double CalcularTax(double precio, int cantidad)
+        private readonly IDALFactura _dalFactura;
+        public BLLFactura()
         {
-            throw new NotImplementedException();
+            _dalFactura = new DALFactura();
         }
 
-        public int GetNextNumeroFactura()
+        public decimal CalcularIVA(decimal subTotal)
         {
-            throw new NotImplementedException();
+            return subTotal * 0.13m;
         }
 
-        public int GetPrevNumeroFactura()
+        public decimal CalcularSubTotal(List<FacturaDetalle> listaDetalle)
         {
-            throw new NotImplementedException();
+            decimal subtotal = 0;
+            if(listaDetalle != null)
+            {
+                foreach (FacturaDetalle item in listaDetalle)
+                {
+                    subtotal += item.Subtotal;
+                }
+            }
+            return subtotal;
         }
 
-        public Factura Save(Factura pfactura)
+        public decimal CalcularTotalColones(decimal subTotal, decimal impuesto)
         {
-            throw new NotImplementedException();
+           return subTotal + impuesto;
         }
 
-        public Task<Factura> Save(DateTime pFechaInicial, DateTime pFechaFinal)
+        public decimal CalcularTotalDolares(decimal totalColones, decimal tipoCambio)
         {
-            throw new NotImplementedException();
+            if (tipoCambio <= 0)
+                throw new Exception("El tipo de cambio debe ser mayor a cero.");
+
+            return totalColones / tipoCambio;
+
+        }
+
+        public bool Delete(int pIdFactura)
+        {
+            if (pIdFactura <= 0)
+                throw new Exception("IdFactura inválido.");
+
+            return _dalFactura.Delete(pIdFactura);
+        }
+
+        public List<Factura> GetAll()
+        {
+           return _dalFactura.GetAll();
+        }
+
+        public Factura GetById(int pIdFactura)
+        {
+            if (pIdFactura <= 0)
+                throw new Exception("IdFactura inválido.");
+
+            return _dalFactura.GetById(pIdFactura);
+        }
+
+        public int Save(Factura factura)
+        {
+            if (_dalFactura == null)
+                throw new Exception("DAL no inicializado.");
+
+            if (factura == null)
+                    throw new Exception("La facturación no puede ser nula.");
+
+            if (string.IsNullOrWhiteSpace(factura.NumeroFactura))
+                throw new Exception("El número de factura es obligatorio.");
+
+            if (factura.IdCliente <= 0)
+                throw new Exception("Debe seleccionar un cliente válido.");
+
+            if (factura.IdUsuario <= 0)
+                throw new Exception("Debe existir un usuario válido.");
+
+            if (factura.TotalColones <= 0)
+                throw new Exception("El total en colones debe ser mayor a cero.");
+
+            //if (string.IsNullOrWhiteSpace(factura.Estado))
+            //    factura.Estado = "P";
+            factura.Estado = false; // pendiente
+
+            return _dalFactura.Insert(factura);
+        }
+
+        public bool Update(Factura factura)
+        {
+            if (factura == null)
+                throw new Exception("La facturación no puede ser nula.");
+
+            if (factura.IdFactura <= 0)
+                throw new Exception("IdFactura inválido.");
+            return _dalFactura.Update(factura);
+        }
+
+        public void UpdateNumFactura(int idFactura, string numFactura)
+        {
+            _dalFactura.UpDateNumFactura(idFactura, numFactura);
+        }
+
+        public void UpdateXMLFactura(int idFactura, string xmlFactura)
+        {
+            if (idFactura <= 0)
+                throw new Exception("IdFactura inválido.");
+
+            if (string.IsNullOrWhiteSpace(xmlFactura))
+                throw new Exception("El XML de la factura está vacío.");
+
+            _dalFactura.UpDateXMLFactura(idFactura, xmlFactura);
         }
     }
 }
+ 

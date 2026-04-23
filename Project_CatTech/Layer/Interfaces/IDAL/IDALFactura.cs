@@ -10,9 +10,12 @@ namespace Project_CatTech.Layer.Interfaces.IDAL
     public interface IDALFactura
     {
         int Insert(Factura factura);
-        void Update(Factura factura);
-        void Delete(int idFactura);
+        bool Update(Factura factura);
+        bool Delete(int idFactura);
         Factura GetById(int idFactura);
         List<Factura> GetAll();
+
+        void UpDateNumFactura(int idFactura, string numeroFactura);
+        void UpDateXMLFactura(int idFactura, string xmlFactura);
     }
 }

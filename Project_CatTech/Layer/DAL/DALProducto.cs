@@ -86,6 +86,49 @@ namespace Project_CatTech.Layer.DAL
             }
         }
 
+        public List<Producto> Get_By_Filter(string filtro)
+        {
+            List<Producto> lista = new List<Producto>();
+            DataSet ds = null;
+
+            string sql = @"SELECT IdProducto, CodigoInterno, Modelo, Precio, CantidadStock
+                   FROM Producto
+                   WHERE Estado = 1
+                   AND (CodigoInterno LIKE @Filtro OR Modelo LIKE @Filtro)";
+
+            SqlCommand command = new SqlCommand();
+
+            try
+            {
+                command.Parameters.AddWithValue("@Filtro", filtro);
+                command.CommandText = sql;
+                command.CommandType = CommandType.Text;
+
+                using (IDataBase db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+                {
+                    ds = db.ExecuteReader(command, "Producto");
+                }
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    lista.Add(new Producto()
+                    {
+                        IdProducto = Convert.ToInt32(dr["IdProducto"]),
+                        CodigoInterno = dr["CodigoInterno"].ToString(),
+                        Modelo = dr["Modelo"].ToString(),
+                        Precio = Convert.ToDouble(dr["Precio"]),
+                        CantidadStock = Convert.ToInt32(dr["CantidadStock"])
+                    });
+                }
+
+                return lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public List<Producto> SelectAll()
         {
             string msg = "";

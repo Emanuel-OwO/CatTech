@@ -66,5 +66,10 @@ namespace Project_CatTech.Layer.BLL
 
             return false;
         }
+
+        public List<Cliente> Get_By_Filter(string pDescripcion)
+        {
+            return _dal.Get_By_Filter(pDescripcion);
+        }
     }
 }

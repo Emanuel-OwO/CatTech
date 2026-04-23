@@ -99,8 +99,11 @@
     <Compile Include="Layer\BLL\BLLCliente.cs" />
     <Compile Include="Layer\BLL\BLLDolar.cs" />
     <Compile Include="Layer\BLL\BLLFactura.cs" />
+    <Compile Include="Layer\BLL\BLLFacturaDetalle.cs" />
     <Compile Include="Layer\BLL\BLLMarca.cs" />
+    <Compile Include="Layer\BLL\BLLMovimientoInventario.cs" />
     <Compile Include="Layer\BLL\BLLPadron.cs" />
+    <Compile Include="Layer\BLL\BLLPago.cs" />
     <Compile Include="Layer\BLL\BLLProducto.cs" />
     <Compile Include="Layer\BLL\BLLProveedor.cs" />
     <Compile Include="Layer\BLL\BLLProvincia.cs" />
@@ -109,7 +112,10 @@
     <Compile Include="Layer\BLL\BLLUsuario.cs" />
     <Compile Include="Layer\DAL\DALCliente.cs" />
     <Compile Include="Layer\DAL\DALFactura.cs" />
+    <Compile Include="Layer\DAL\DALFacturaDetalle.cs" />
     <Compile Include="Layer\DAL\DALMarca.cs" />
+    <Compile Include="Layer\DAL\DALMovimientoInventario.cs" />
+    <Compile Include="Layer\DAL\DALPago.cs" />
     <Compile Include="Layer\DAL\DALProducto.cs" />
     <Compile Include="Layer\DAL\DALProveedor.cs" />
     <Compile Include="Layer\DAL\DALProvincia.cs" />
@@ -134,19 +140,26 @@
     <Compile Include="Layer\Entities\TipoDispositivo.cs" />
     <Compile Include="Layer\Entities\TipoPago.cs" />
     <Compile Include="Layer\Entities\Usuario.cs" />
+    <Compile Include="Layer\Entities\XmlService.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLCliente.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLDolar.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLFactura.cs" />
+    <Compile Include="Layer\Interfaces\IBLL\IBLLFacturaDetalle.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLMarca.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLPadron.cs" />
+    <Compile Include="Layer\Interfaces\IBLL\IBLLPago.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLProducto.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLProveedor.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLStock.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLTipoDispositivo.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLUsuario.cs" />
+    <Compile Include="Layer\Interfaces\IBLL\IBLLMovimientoInventario.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALCliente.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALFactura.cs" />
+    <Compile Include="Layer\Interfaces\IDAL\IDALFacturaDetalle.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALMarca.cs" />
+    <Compile Include="Layer\Interfaces\IDAL\IDALMovimientoInventario.cs" />
+    <Compile Include="Layer\Interfaces\IDAL\IDALPago.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProducto.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProveedor.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProvincia.cs" />
@@ -235,6 +248,12 @@
     <Compile Include="Layer\UI\Procesos\frmFactura.Designer.cs">
       <DependentUpon>frmFactura.cs</DependentUpon>
     </Compile>
+    <Compile Include="Layer\UI\Procesos\frmFirma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Procesos\frmFirma.Designer.cs">
+      <DependentUpon>frmFirma.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Cryptography.cs" />
@@ -283,6 +302,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Layer\UI\Procesos\frmFactura.resx">
       <DependentUpon>frmFactura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Procesos\frmFirma.resx">
+      <DependentUpon>frmFirma.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

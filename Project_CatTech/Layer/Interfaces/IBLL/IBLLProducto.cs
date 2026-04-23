@@ -14,5 +14,7 @@ namespace Project_CatTech.Layer.Interfaces
         void DELETE(int id);
         List<Producto> SelectAll();
         Producto SelectById(int id);
+
+        List<Producto> Get_By_Filter(string filtro);
     }
 }

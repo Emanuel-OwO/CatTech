@@ -15,14 +15,58 @@ namespace Project_CatTech.Layer.DAL
     public class DALFactura : IDALFactura
     {
         private static readonly ILog _log = LogManager.GetLogger("MyControlEventos");
-        public void Delete(int idFactura)
+
+        public bool Delete(int idFactura)
         {
-            
+            try
+            {
+                using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+                {
+                    var command = new SqlCommand("usp_DELETE_Factura_ByID");
+                    command.Parameters.AddWithValue("@IdFactura", idFactura);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    db.ExecuteNonQuery(command);
+                }
+            }
+            catch (Exception er) { _log.Error("Error DELETE Factura", er); throw; }
+        
+            return true;
         }
 
         public List<Factura> GetAll()
         {
-            throw new NotImplementedException();
+            List<Factura> lista = new List<Factura>();
+
+            try
+            {
+                using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+                {
+                    var command = new SqlCommand("usp_SELECT_Factura_All");
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    var ds = db.ExecuteReader(command, "Factura");
+
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        lista.Add(new Factura
+                        {
+                            NumeroFactura = dr["NumeroFactura"].ToString(),
+                            Fecha = Convert.ToDateTime(dr["Fecha"]),
+                            IdCliente = Convert.ToInt32(dr["IdCliente"]),
+                            IdUsuario = Convert.ToInt32(dr["IdUsuario"]),
+                            SubTotal = Convert.ToDouble(dr["SubTotal"]),
+                            Impuesto = Convert.ToDouble(dr["Impuesto"]),
+                            TotalColones = Convert.ToDouble(dr["TotalColones"]),
+                            TotalDolares = Convert.ToDouble(dr["TotalDolares"]),
+                            Estado = Convert.ToBoolean(dr["Estado"])
+                        });
+                    }
+                }
+            }
+            catch (Exception er) { _log.Error("Error GET_ALL Factura", er); throw; }
+
+            return lista;
         }
 
         public Factura GetById(int idFactura)
@@ -93,9 +137,71 @@ namespace Project_CatTech.Layer.DAL
         
         }
 
-        public void Update(Factura factura)
+        public bool Update(Factura factura)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+                {
+                    var command = new SqlCommand("usp_UPDATE_Factura");
+
+                    command.Parameters.AddWithValue("@IdFactura", factura.IdFactura);
+                    command.Parameters.AddWithValue("@NumeroFactura", factura.NumeroFactura);
+                    command.Parameters.AddWithValue("@Fecha", factura.Fecha);
+                    command.Parameters.AddWithValue("@IdCliente", factura.IdCliente);
+                    command.Parameters.AddWithValue("@IdUsuario", factura.IdUsuario);
+                    command.Parameters.AddWithValue("@SubTotal", factura.SubTotal);
+                    command.Parameters.AddWithValue("@Impuesto", factura.Impuesto);
+                    command.Parameters.AddWithValue("@TotalColones", factura.TotalColones);
+                    command.Parameters.AddWithValue("@TotalDolares", factura.TotalDolares);
+                    command.Parameters.AddWithValue("@XMLFactura",
+                        factura.XMLFactura != null ? (object)factura.XMLFactura.ToString() : DBNull.Value);
+                    command.Parameters.AddWithValue("@FirmaCliente",
+                        factura.FirmaCliente != null ? (object)factura.FirmaCliente : DBNull.Value);
+                    command.Parameters.AddWithValue("@Estado", factura.Estado);
+
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    db.ExecuteNonQuery(command);
+                }
+            }
+            catch (Exception er) { _log.Error("Error UPDATE Factura", er); throw; }
+
+            return true;
+        }
+
+        public void UpDateNumFactura(int idFactura, string numeroFactura)
+        {
+            using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_UPDATE_NumeroFactura"))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@IdFactura", SqlDbType.Int).Value = idFactura;
+                    cmd.Parameters.Add("@NumeroFactura", SqlDbType.VarChar, 50).Value = numeroFactura;
+
+                   
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpDateXMLFactura(int idFactura, string xmlFactura)
+        {
+            using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_UPDATE_XMLFactura"))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@IdFactura", SqlDbType.Int).Value = idFactura;
+                    cmd.Parameters.Add("@XMLFactura", SqlDbType.Xml).Value = xmlFactura;
+
+                    
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
