@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-static class Utilitarios
+static class UtilitariosCode
 {
     public static void CultureInfo()
     {

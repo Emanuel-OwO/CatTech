@@ -202,7 +202,7 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
 
         private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            CargarDesdeGrid();
+            //CargarDesdeGrid();
         }
 
         private void pctDocumento_Click(object sender, EventArgs e)
@@ -227,12 +227,12 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
             catch (SqlException sqlError)
             {
                 // Mensaje de Error
-                MessageBox.Show("Se ha producido el siguiente error: \n" + Utilitarios.GetCustomErrorByNumber(sqlError), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Se ha producido el siguiente error: \n" + UtilitariosCode.GetCustomErrorByNumber(sqlError), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception er)
             {
                 StringBuilder msg = new StringBuilder();
-                msg.AppendFormat(Utilitarios.CreateGenericErrorExceptionDetail(MethodBase.GetCurrentMethod(), er));
+                msg.AppendFormat(UtilitariosCode.CreateGenericErrorExceptionDetail(MethodBase.GetCurrentMethod(), er));
                 // Mensaje de Error
                 MessageBox.Show("Se ha producido el siguiente error: " + er.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -356,6 +356,16 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
             cmbProveedor.SelectedIndex = -1;
         }
 
-
+        private void dgvDatos_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                CargarDesdeGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al seleccionar producto: " + ex.Message);
+            }
+        }
     }
 }

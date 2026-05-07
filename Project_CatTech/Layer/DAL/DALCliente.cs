@@ -163,6 +163,7 @@ namespace Project_CatTech.Layer.DAL
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
                     Cliente c = new Cliente();
+                    c.IdCliente = Convert.ToInt32(dr["IdCliente"]); // ← AGREGÁ ESTA LÍNEA
                     c.TipoIdentificacion = dr["TipoIdentificacion"].ToString();
                     c.Identificacion = dr["Identificacion"].ToString();
                     c.Nombre = dr["Nombre"].ToString();

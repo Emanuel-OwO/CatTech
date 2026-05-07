@@ -232,6 +232,7 @@
             this.dgvDatos.Size = new System.Drawing.Size(392, 634);
             this.dgvDatos.TabIndex = 108;
             this.dgvDatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDatos_CellContentClick);
+            this.dgvDatos.SelectionChanged += new System.EventHandler(this.dgvDatos_SelectionChanged);
             // 
             // label5
             // 

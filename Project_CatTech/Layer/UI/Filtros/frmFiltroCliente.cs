@@ -29,27 +29,14 @@ namespace Project_CatTech.Layer.UI.Filtros
 
         private void frmFiltroCliente_Load(object sender, EventArgs e)
         {
-
+            ConfigurarGridCliente();
+            CargarClientes("%%");
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            IBLLCliente bLLCliente = new BLLCliente();
-            string filtro = string.Empty;
-            try
-            {
-                filtro = this.txtBuscarCliente.Text;
-                filtro = filtro.Replace(' ', '%');
-                filtro = "%" + filtro + "%";
-                this.dgvDatos.AutoGenerateColumns = true;
-                this.dgvDatos.DataSource = bLLCliente.Get_By_Filter(filtro);
-                dgvDatos.Columns["Fotografia"].Visible = false;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            string filtro = "%" + txtBuscarCliente.Text.Replace(' ', '%') + "%";
+            CargarClientes(filtro);
         }
 
         private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -89,16 +76,40 @@ namespace Project_CatTech.Layer.UI.Filtros
         {
             if (dgvDatos.CurrentRow != null)
             {
-                cliente = new Cliente()
-                {
-                    IdCliente = Convert.ToInt32(dgvDatos.CurrentRow.Cells["IdCliente"].Value),
-                    Nombre = dgvDatos.CurrentRow.Cells["Nombre"].Value.ToString(),
-                    Identificacion = dgvDatos.CurrentRow.Cells["Identificacion"].Value.ToString(),
-                    Telefono = dgvDatos.CurrentRow.Cells["Telefono"].Value.ToString(),
-                    Correo = dgvDatos.CurrentRow.Cells["Correo"].Value.ToString()
-                };
+                // Usar DataBoundItem igual que el clic simple
+                cliente = dgvDatos.CurrentRow.DataBoundItem as Cliente;
 
-                this.Close(); 
+                if (cliente != null)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+            }
+        }
+
+        private void ConfigurarGridCliente()
+        {
+            dgvDatos.AutoGenerateColumns = false;
+            dgvDatos.Columns.Clear();
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "IdCliente", DataPropertyName = "IdCliente", HeaderText = "Id", Width = 35 });
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "TipoIdentificacion", DataPropertyName = "TipoIdentificacion", HeaderText = "Tipo", Width = 45 });
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "Identificacion", DataPropertyName = "Identificacion", HeaderText = "Cédula", Width = 90 });
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "Nombre", DataPropertyName = "Nombre", HeaderText = "Nombre", Width = 90 });
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "PrimerApellido", DataPropertyName = "PrimerApellido", HeaderText = "1er Apellido", Width = 90 });
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "SegundoApellido", DataPropertyName = "SegundoApellido", HeaderText = "2do Apellido", Width = 90 });
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "Telefono", DataPropertyName = "Telefono", HeaderText = "Teléfono", Width = 90 });
+            dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "Correo", DataPropertyName = "Correo", HeaderText = "Correo", Width = 160 });
+        }
+
+        private void CargarClientes(string filtro)
+        {
+            try
+            {
+                dgvDatos.DataSource = new BLLCliente().Get_By_Filter(filtro);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando clientes: " + ex.Message);
             }
         }
     }

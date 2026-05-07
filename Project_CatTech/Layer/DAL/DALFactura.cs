@@ -108,33 +108,42 @@ namespace Project_CatTech.Layer.DAL
                 using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
                     var command = new SqlCommand("sp_Factura_Insertar");
-                    command.Parameters.AddWithValue("@NumeroFactura", factura.NumeroFactura);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // ── Parámetros INPUT (sin @NumeroFactura — el SP lo genera solo) ──
                     command.Parameters.AddWithValue("@Fecha", factura.Fecha);
                     command.Parameters.AddWithValue("@IdCliente", factura.IdCliente);
                     command.Parameters.AddWithValue("@IdUsuario", factura.IdUsuario);
-                    command.Parameters.AddWithValue("@SubTotal", factura.SubTotal);
-                    command.Parameters.AddWithValue("@Impuesto", factura.Impuesto);
-                    command.Parameters.AddWithValue("@TotalColones", factura.TotalColones);
-                    command.Parameters.AddWithValue("@TotalDolares", factura.TotalDolares);
+                    command.Parameters.Add("@SubTotal", SqlDbType.Decimal).Value = (decimal)factura.SubTotal;
+                    command.Parameters.Add("@Impuesto", SqlDbType.Decimal).Value = (decimal)factura.Impuesto;
+                    command.Parameters.Add("@TotalColones", SqlDbType.Decimal).Value = (decimal)factura.TotalColones;
+                    command.Parameters.Add("@TotalDolares", SqlDbType.Decimal).Value = (decimal)factura.TotalDolares;
                     command.Parameters.AddWithValue("@XMLFactura",
                         factura.XMLFactura != null ? (object)factura.XMLFactura.ToString() : DBNull.Value);
                     command.Parameters.AddWithValue("@FirmaCliente",
                         factura.FirmaCliente != null ? (object)factura.FirmaCliente : DBNull.Value);
-                    command.Parameters.AddWithValue("@Estado", true);
 
-                    // Parámetro OUTPUT para recibir el IdFactura
+                    // ── Parámetros OUTPUT — el SP los llena ──────────────────────────
+                    var paramNumero = new SqlParameter("@NumeroFactura", SqlDbType.VarChar, 50);
+                    paramNumero.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(paramNumero);
+
                     var paramId = new SqlParameter("@IdFactura", SqlDbType.Int);
                     paramId.Direction = ParameterDirection.Output;
                     command.Parameters.Add(paramId);
 
-                    command.CommandType = CommandType.StoredProcedure;
                     db.ExecuteNonQuery(command);
 
+                    // Guardar el número generado por el SP en la entidad
+                    factura.NumeroFactura = paramNumero.Value?.ToString() ?? "";
                     return Convert.ToInt32(paramId.Value);
                 }
             }
-            catch (Exception er) { _log.Error("Error INSERT Factura", er); throw; }
-        
+            catch (Exception er)
+            {
+                _log.Error("Error INSERT Factura", er);
+                throw;
+            }
         }
 
         public bool Update(Factura factura)
@@ -172,18 +181,23 @@ namespace Project_CatTech.Layer.DAL
 
         public void UpDateNumFactura(int idFactura, string numeroFactura)
         {
-            using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand("usp_UPDATE_NumeroFactura"))
+                using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
+                    var cmd = new SqlCommand("usp_UPDATE_NumeroFactura");
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.Add("@IdFactura", SqlDbType.Int).Value = idFactura;
                     cmd.Parameters.Add("@NumeroFactura", SqlDbType.VarChar, 50).Value = numeroFactura;
 
-                   
-                    cmd.ExecuteNonQuery();
+                    // ← ESTO es lo que faltaba: pasar el cmd al db, no llamarlo directo
+                    db.ExecuteNonQuery(cmd);
                 }
+            }
+            catch (Exception er)
+            {
+                _log.Error("Error UPDATE NumeroFactura", er);
+                throw;
             }
         }
 
@@ -194,12 +208,10 @@ namespace Project_CatTech.Layer.DAL
                 using (SqlCommand cmd = new SqlCommand("usp_UPDATE_XMLFactura"))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.Add("@IdFactura", SqlDbType.Int).Value = idFactura;
                     cmd.Parameters.Add("@XMLFactura", SqlDbType.Xml).Value = xmlFactura;
 
-                    
-                    cmd.ExecuteNonQuery();
+                    db.ExecuteNonQuery(cmd); // ← este es el cambio
                 }
             }
         }

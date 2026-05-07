@@ -126,6 +126,7 @@
             this.Controls.Add(this.dgvDatos);
             this.Controls.Add(this.toolStrip1);
             this.Name = "frmFiltroProducto";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmFiltroProducto";
             this.Load += new System.EventHandler(this.frmFiltroProducto_Load);
             this.toolStrip1.ResumeLayout(false);

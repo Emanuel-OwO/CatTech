@@ -84,45 +84,42 @@ namespace Project_CatTech.Layer.UI.Mantenimientos
             {
                 Cliente cliente = new Cliente();
 
-                // IMPORTANTE: Debes tener el ID del cliente seleccionado
-                cliente.IdCliente = Convert.ToInt32(dgvDatos.CurrentRow.Cells["IdCliente"].Value); // o de donde lo tengas
+                cliente.IdCliente = Convert.ToInt32(dgvDatos.CurrentRow.Cells["IdCliente"].Value);
 
-                cliente.TipoIdentificacion = txtIdentificacion.Text;
-                cliente.Identificacion = txtTipoID.Text;
+                // FIX — campos correctos (estaban invertidos)
+                cliente.TipoIdentificacion = txtTipoID.Text;          // ← "Nacional", "N", etc.
+                cliente.Identificacion = txtIdentificacion.Text;  // ← "208520175"
                 cliente.Nombre = txtNombre.Text;
                 cliente.PrimerApellido = txtPrimerApellido.Text;
                 cliente.SegundoApellido = txtSegundoApellido.Text;
-
-                // Provincia (aquí estaba mal en tu agregar)
-                cliente.Provincia = cmbProvincia.SelectedItem.ToString();
-
+                cliente.Provincia = cmbProvincia.SelectedItem?.ToString() ?? "";
                 cliente.Telefono = mskTelefono.Text.Trim().Replace("-", "");
-                cliente.Correo = txtCorreo.Text;
+                cliente.Correo = txtCorreo.Text.Trim();   // ← asegurate de este
                 cliente.Direccion = txtDescripcion.Text;
                 cliente.Fotografia = (byte[])pctFoto.Tag;
                 cliente.Estado = rdoActivo.Checked;
 
-                // Sexo
                 if (rdoMasculino.Checked)
-                {
                     cliente.Sexo = "M";
-                }
                 else if (rdoFemenino.Checked)
-                {
                     cliente.Sexo = "F";
-                }
                 else
                 {
                     MessageBox.Show("Debe seleccionar el sexo");
                     return;
                 }
+                MessageBox.Show(
+    $"IdCliente: {cliente.IdCliente}\n" +
+    $"TipoID: {cliente.TipoIdentificacion}\n" +
+    $"Identificacion: {cliente.Identificacion}\n" +
+    $"Correo: {cliente.Correo}\n" +
+    $"Provincia: {cliente.Provincia}"
+);
 
-                // Llamar al BLL
-                BLL.BLLCliente oClienteBLL = new BLL.BLLCliente();
-                oClienteBLL.UPDATE(cliente); // ESTE ES EL MÉTODO UPDATE
+                BLLCliente oClienteBLL = new BLLCliente();
+                oClienteBLL.UPDATE(cliente);
 
                 MessageBox.Show("Cliente actualizado correctamente");
-
                 CargarUsuarios();
                 LimpiarCampos();
             }

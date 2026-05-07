@@ -150,6 +150,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "frmFiltroCliente";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmFiltroCliente";
             this.Load += new System.EventHandler(this.frmFiltroCliente_Load);
             this.toolStrip1.ResumeLayout(false);

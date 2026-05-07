@@ -75,28 +75,24 @@ namespace Project_CatTech.Layer.BLL
         {
             if (_dalFactura == null)
                 throw new Exception("DAL no inicializado.");
-
             if (factura == null)
-                    throw new Exception("La facturación no puede ser nula.");
+                throw new Exception("La facturación no puede ser nula.");
 
-            if (string.IsNullOrWhiteSpace(factura.NumeroFactura))
-                throw new Exception("El número de factura es obligatorio.");
+            // ↓ COMENTÁ o BORRÁ esta línea — el SP genera el número, no el form
+            // if (string.IsNullOrWhiteSpace(factura.NumeroFactura))
+            //     throw new Exception("El número de factura es obligatorio.");
 
             if (factura.IdCliente <= 0)
                 throw new Exception("Debe seleccionar un cliente válido.");
-
             if (factura.IdUsuario <= 0)
                 throw new Exception("Debe existir un usuario válido.");
-
             if (factura.TotalColones <= 0)
                 throw new Exception("El total en colones debe ser mayor a cero.");
 
-            //if (string.IsNullOrWhiteSpace(factura.Estado))
-            //    factura.Estado = "P";
             factura.Estado = false; // pendiente
-
             return _dalFactura.Insert(factura);
         }
+
 
         public bool Update(Factura factura)
         {

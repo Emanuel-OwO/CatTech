@@ -18,83 +18,109 @@ namespace Project_CatTech.Layer.DAL
 
         public bool DeleteByFactura(int pIdFactura)
         {
-            int filas = 0;
-
-            using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand("usp_DELETE_FacturaDetalle_ByFactura"))
+                string sql = "DELETE FROM FacturaDetalle WHERE IdFactura = @IdFactura";
+
+                SqlCommand command = new SqlCommand();
+                command.Parameters.AddWithValue("@IdFactura", pIdFactura);
+                command.CommandText = sql;
+                command.CommandType = CommandType.Text;
+
+                using (IDataBase db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdFactura", pIdFactura);
-
-                   
-                    filas = cmd.ExecuteNonQuery();
+                    db.ExecuteNonQuery(command, IsolationLevel.ReadCommitted);
                 }
-            }
 
-            return filas > 0;
+                return true;
+            }
+            catch (Exception er)
+            {
+                _log.Error("Error DELETE FacturaDetalle", er);
+                throw;
+            }
         }
 
         public List<FacturaDetalle> GetByFactura(int pIdFactura)
         {
-            List<FacturaDetalle> lista = new List<FacturaDetalle>();
-
-            using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand("usp_SELECT_FacturaDetalle_ByFactura"))
+                string sql = "SELECT * FROM FacturaDetalle WHERE IdFactura = @IdFactura";
+
+                SqlCommand command = new SqlCommand();
+                command.Parameters.AddWithValue("@IdFactura", pIdFactura);
+                command.CommandText = sql;
+                command.CommandType = CommandType.Text;
+
+                var lista = new List<FacturaDetalle>();
+
+                using (IDataBase db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdFactura", pIdFactura);
+                    DataSet ds = db.ExecuteReader(command, "FacturaDetalle");
 
-                    
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    foreach (DataRow dr in ds.Tables[0].Rows)
                     {
-                        while (reader.Read())
+                        lista.Add(new FacturaDetalle
                         {
-                            FacturaDetalle detalle = new FacturaDetalle
-                            {
-                                IdDetalle = Convert.ToInt32(reader["IdDetalle"]),
-                                IdFactura = Convert.ToInt32(reader["IdFactura"]),
-                                IdProducto = Convert.ToInt32(reader["IdProducto"]),
-                                Cantidad = Convert.ToInt32(reader["Cantidad"]),
-                                Precio = Convert.ToDecimal(reader["Precio"]),
-                                Subtotal = Convert.ToDecimal(reader["Subtotal"])
-                            };
-
-                            lista.Add(detalle);
-                        }
+                            IdDetalle = Convert.ToInt32(dr["IdDetalle"]),
+                            IdFactura = Convert.ToInt32(dr["IdFactura"]),
+                            IdProducto = Convert.ToInt32(dr["IdProducto"]),
+                            Cantidad = Convert.ToInt32(dr["Cantidad"]),
+                            Precio = (decimal)Convert.ToDouble(dr["Precio"]),
+                            Subtotal = (decimal)Convert.ToDouble(dr["Subtotal"])
+                        });
                     }
                 }
-            }
 
-            return lista;
+                return lista;
+            }
+            catch (Exception er)
+            {
+                _log.Error("Error SELECT FacturaDetalle", er);
+                throw;
+            }
         }
 
         public int Insert(FacturaDetalle facturaDetalle)
         {
-            int idDetalle = 0;
-
-            using (var db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand("usp_INSERT_FacturaDetalle"))
+                // Usamos ExecuteNonQuery (no ExecuteScalar) porque el IDataBase
+                // de este proyecto retorna double en ExecuteScalar, no object.
+                // El IdDetalle no se necesita en el flujo de facturación.
+                string sql = @"INSERT INTO FacturaDetalle 
+                               (IdFactura, IdProducto, Cantidad, Precio, Subtotal)
+                               VALUES 
+                               (@IdFactura, @IdProducto, @Cantidad, @Precio, @Subtotal)";
+
+                SqlCommand command = new SqlCommand();
+                command.CommandText = sql;
+                command.CommandType = CommandType.Text;
+
+                command.Parameters.AddWithValue("@IdFactura", facturaDetalle.IdFactura);
+                command.Parameters.AddWithValue("@IdProducto", facturaDetalle.IdProducto);
+                command.Parameters.AddWithValue("@Cantidad", facturaDetalle.Cantidad);
+
+                // Cast explícito a decimal para que coincida con decimal(10,2) de la BD
+                command.Parameters.Add("@Precio", SqlDbType.Decimal).Value = (decimal)facturaDetalle.Precio;
+                command.Parameters.Add("@Subtotal", SqlDbType.Decimal).Value = (decimal)facturaDetalle.Subtotal;
+                command.Parameters["@Precio"].Precision = 10;
+                command.Parameters["@Precio"].Scale = 2;
+                command.Parameters["@Subtotal"].Precision = 10;
+                command.Parameters["@Subtotal"].Scale = 2;
+
+                using (IDataBase db = FactoryDatabase.CreateDataBase(FactoryConexion.CreateConnection()))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@IdFactura", facturaDetalle.IdFactura);
-                    cmd.Parameters.AddWithValue("@IdProducto", facturaDetalle.IdProducto);
-                    cmd.Parameters.AddWithValue("@Cantidad", facturaDetalle.Cantidad);
-                    cmd.Parameters.AddWithValue("@Precio", facturaDetalle.Precio);
-                    cmd.Parameters.AddWithValue("@Subtotal", facturaDetalle.Subtotal);
-
-                    object result = cmd.ExecuteScalar();
-
-                    if (result != null)
-                        idDetalle = Convert.ToInt32(result);
+                    db.ExecuteNonQuery(command);
                 }
-            }
 
-            return idDetalle;
+                return 1; // éxito
+            }
+            catch (Exception er)
+            {
+                _log.Error("Error INSERT FacturaDetalle", er);
+                throw;
+            }
         }
     }
 }

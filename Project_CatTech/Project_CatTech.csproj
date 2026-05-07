@@ -47,6 +47,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="QuestPDF, Version=2026.2.4.0, Culture=neutral, PublicKeyToken=0f3c2b2315ff52c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuestPDF.2026.2.4\lib\netstandard2.0\QuestPDF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
@@ -122,6 +125,9 @@
     <Compile Include="Layer\DAL\DALStock.cs" />
     <Compile Include="Layer\DAL\DALTipoDispositivo.cs" />
     <Compile Include="Layer\DAL\DALUsuario.cs" />
+    <Compile Include="Layer\DTO\FacturaReporteDTO.cs" />
+    <Compile Include="Layer\DTO\ProductoVendidoReporteDTO.cs" />
+    <Compile Include="Layer\DTO\VentasPorFechaDTO.cs" />
     <Compile Include="Layer\Entities\Banco.cs" />
     <Compile Include="Layer\Entities\BCR\Dolar.cs" />
     <Compile Include="Layer\Entities\BCR\ServicesBCCR.cs" />
@@ -256,14 +262,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\Cryptography.cs" />
-    <Compile Include="Util\CustomException.cs" />
-    <Compile Include="Util\ExceptionsExtention.cs" />
-    <Compile Include="Util\LeerDatos.cs" />
-    <Compile Include="Util\QuickResponse.cs" />
-    <Compile Include="Util\UtilError.cs" />
-    <Compile Include="Util\Utilitarios.cs" />
-    <Compile Include="Util\Utils.cs" />
+    <Compile Include="Utilitarios\ClienteReportePdfService.cs" />
+    <Compile Include="Utilitarios\EnviarCorreo.cs" />
+    <Compile Include="Utilitarios\FacturaPdfService.cs" />
+    <Compile Include="Utilitarios\FacturaReportePdfService.cs" />
+    <Compile Include="Utilitarios\ProductoVendidoReportePdfService.cs" />
+    <Compile Include="Utilitarios\Util\Cryptography.cs" />
+    <Compile Include="Utilitarios\Util\CustomException.cs" />
+    <Compile Include="Utilitarios\Util\ExceptionsExtention.cs" />
+    <Compile Include="Utilitarios\Util\FacturaXmlHelper.cs" />
+    <Compile Include="Utilitarios\Util\LeerDatos.cs" />
+    <Compile Include="Utilitarios\Util\QuickResponse.cs" />
+    <Compile Include="Utilitarios\Util\UtilError.cs" />
+    <Compile Include="Utilitarios\Util\UtilitariosCode.cs" />
+    <Compile Include="Utilitarios\Util\Utils.cs" />
     <EmbeddedResource Include="Layer\UI\Filtros\frmFiltroCliente.resx">
       <DependentUpon>frmFiltroCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -369,5 +381,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets'))" />
+    <Error Condition="!Exists('..\packages\QuestPDF.2026.2.4\build\net4\QuestPDF.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\QuestPDF.2026.2.4\build\net4\QuestPDF.targets'))" />
   </Target>
+  <Import Project="..\packages\QuestPDF.2026.2.4\build\net4\QuestPDF.targets" Condition="Exists('..\packages\QuestPDF.2026.2.4\build\net4\QuestPDF.targets')" />
 </Project>

@@ -1,24 +1,21 @@
-﻿using appSweetTech.Extensiones;
-using Project_CatTech.Layer.BLL;
+﻿using Project_CatTech.Layer.BLL;
 using Project_CatTech.Layer.Entities;
-using Project_CatTech.Layer.Interfaces;
 using Project_CatTech.Layer.UI.Filtros;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Project_CatTech.Utilitarios;
+
 
 namespace Project_CatTech.Layer.UI.Procesos
 {
     public partial class frmFactura : Form
     {
+
+        private string correoClienteSeleccionado = "";
 
         private readonly BLLFactura _bllFactura = new BLLFactura();
         private readonly BLLFacturaDetalle _bllDetalle = new BLLFacturaDetalle();
@@ -32,10 +29,11 @@ namespace Project_CatTech.Layer.UI.Procesos
         private int _idProductoSeleccionado = 0;
         private int _stockProductoSeleccionado = 0;
         private double _tipoCambio = 1;
+        private string _codigoProductoSeleccionado = "";
 
         private List<FacturaDetalle> _detalleFactura = new List<FacturaDetalle>();
         private byte[] _firmaBytes;
-        private Producto producto; 
+        private Producto producto;
         private Cliente clienteSelect;
 
         // El usuario actualmente logueado se debe pasar por constructor o propiedad
@@ -51,35 +49,60 @@ namespace Project_CatTech.Layer.UI.Procesos
             CargarTipoCambio();
             ConfigurarGrid();
             ConfigurarComboPago();
+            CargarBancos();
             IniciarNuevaFactura();
         }
 
         private void btnFiltroCliente_Click(object sender, EventArgs e)
         {
-            frmFiltroCliente frm = new frmFiltroCliente();
-            frm.ShowDialog();
-
-            if (frm.cliente != null)
+            try
             {
-                clienteSelect = frm.cliente; // 🔥 IMPORTANTE
+                using (frmFiltroCliente frm = new frmFiltroCliente())
+                {
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        Cliente c = frm.cliente;
+                        _idClienteSeleccionado = c.IdCliente;
+                        correoClienteSeleccionado = c.Correo ?? ""; // ← AGREGÁ ESTA LÍNEA
 
-                txtNombreCliente.Text = clienteSelect.Nombre;
-                txtCedula.Text = clienteSelect.Identificacion;
-                txtCelular.Text = clienteSelect.Telefono;
+                        txtNombreCliente.Text = c.Nombre + " "
+                                              + c.PrimerApellido + " "
+                                              + c.SegundoApellido;
+                        txtCedula.Text = c.Identificacion;
+                        txtCelular.Text = c.Telefono;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar cliente: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnFiltroProducto_Click(object sender, EventArgs e)
         {
-            frmFiltroProducto frm = new frmFiltroProducto();
-            frm.ShowDialog();
-
-            if (frm.producto != null)
+            try
             {
-                producto = frm.producto; // 🔥 IMPORTANTE
+                using (frmFiltroProducto frm = new frmFiltroProducto())
+                {
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        Producto p = frm.producto;
+                        _idProductoSeleccionado = p.IdProducto;
+                        _stockProductoSeleccionado = p.CantidadStock;
+                        _codigoProductoSeleccionado = p.CodigoInterno;
 
-                txtProducto.Text = producto.Modelo;
-                txtPrecio.Text = producto.Precio.ToString("N2");
+                        txtProducto.Text = p.Modelo;
+                        txtPrecio.Text = p.Precio.ToString("N2");
+                        txtCantidad.Focus();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar producto: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -100,49 +123,132 @@ namespace Project_CatTech.Layer.UI.Procesos
                 if (listaDetalle.Count == 0)
                     throw new Exception("Debe agregar al menos un producto.");
 
-                // Verificar stock real en BD antes de guardar
+                // Verificar stock real en BD
                 foreach (FacturaDetalle item in listaDetalle)
                 {
                     Producto p = _bllProducto.SelectById(item.IdProducto);
                     if (p == null)
                         throw new Exception("No se encontró el producto con Id: " + item.IdProducto);
-
                     if (item.Cantidad > p.CantidadStock)
-                        throw new Exception("Stock insuficiente para el producto: " + p.Modelo);
+                        throw new Exception($"Stock insuficiente para '{p.Modelo}'. Disponible: {p.CantidadStock}.");
                 }
 
-                // Armar la factura
+                // Calcular totales
+                decimal subTotal = _bllFactura.CalcularSubTotal(listaDetalle);
+                decimal impuesto = _bllFactura.CalcularIVA(subTotal);
+                decimal totalColones = _bllFactura.CalcularTotalColones(subTotal, impuesto);
+
+                decimal tipoCambio = 530m;
+                if (decimal.TryParse(txtDolar.Text.Replace(",", ""), out decimal tc) && tc > 0)
+                    tipoCambio = tc;
+
+                decimal totalDolares = _bllFactura.CalcularTotalDolares(totalColones, tipoCambio);
+
+                // Armar cabecera
                 Factura factura = new Factura
                 {
-                    Fecha = DateTime.Now,
+                    NumeroFactura = "",
+                    Fecha = dtpFecha.Value,
                     IdCliente = _idClienteSeleccionado,
                     IdUsuario = IdUsuarioLogueado,
-                    SubTotal = Convert.ToDouble(txtSubTotal.Text),
-                    Impuesto = Convert.ToDouble(txtImpreso.Text),
-                    TotalColones = Convert.ToDouble(txtTotalColones.Text),
-                    TotalDolares = Convert.ToDouble(txtTotalDolares.Text),
-                    Estado = true
+                    SubTotal = (double)subTotal,
+                    Impuesto = (double)impuesto,
+                    TotalColones = (double)totalColones,
+                    TotalDolares = (double)totalDolares,
+                    FirmaCliente = _firmaBytes,
+                    Estado = txtEstado.Text.Trim().ToLower() == "activa"
                 };
 
-                // Guardar cabecera → retorna el objeto con IdFactura y NumeroFactura ya asignados
+                // Guardar cabecera — el SP genera el número y lo retorna
                 int idFactura = _bllFactura.Save(factura);
-                Factura facturaGuardada = _bllFactura.GetById(idFactura);
+                string numeroFinal = factura.NumeroFactura;
+                factura.IdFactura = idFactura;   // ← necesario para el XML
 
                 // Guardar detalles y rebajar stock
                 foreach (FacturaDetalle item in listaDetalle)
                 {
-                    item.IdFactura = facturaGuardada.IdFactura;
+                    item.IdFactura = idFactura;
                     _bllDetalle.Save(item);
 
-                    // Rebajar stock (usar el método que ya existe en BLLProducto / DALProducto)
-                    Producto p = _bllProducto.SelectById(item.IdProducto);
-                    p.CantidadStock -= item.Cantidad;
-                    _bllProducto.UPDATE(p);
+                    Producto prod = _bllProducto.SelectById(item.IdProducto);
+                    prod.CantidadStock -= item.Cantidad;
+                    _bllProducto.UPDATE(prod);
                 }
 
-                txtNumeroFactura.Text = facturaGuardada.NumeroFactura;
+                // Actualizar pantalla
+                txtNumeroFactura.Text = numeroFinal;
+                txtEstado.Text = "Guardada";
 
-                MessageBox.Show("Factura guardada correctamente.\nNúmero: " + facturaGuardada.NumeroFactura,
+                // Generar y guardar XML
+                string xmlGenerado = Project_CatTech.Utilitarios.Util.FacturaXmlHelper.GenerarXml(
+                    factura,
+                    listaDetalle,
+                    txtNombreCliente.Text.Trim(),
+                    cmbTipoPago.SelectedItem.ToString()
+                );
+
+                string carpetaXml = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FacturasXML");
+                if (!System.IO.Directory.Exists(carpetaXml))
+                    System.IO.Directory.CreateDirectory(carpetaXml);
+
+                string rutaXml = System.IO.Path.Combine(carpetaXml, numeroFinal + ".xml");
+                System.IO.File.WriteAllText(rutaXml, xmlGenerado, System.Text.Encoding.UTF8);
+                _bllFactura.UpdateXMLFactura(idFactura, xmlGenerado);
+
+                // Generar PDF con QR
+                string contenidoQR =
+                    "CatTech\n\n" +
+                    "Factura: " + numeroFinal + "\n" +
+                    "Cliente: " + txtNombreCliente.Text + "\n" +
+                    "Cédula: " + txtCedula.Text + "\n" +
+                    "Fecha: " + dtpFecha.Value.ToString("dd/MM/yyyy") + "\n" +
+                    "Total CRC: " + txtTotalColones.Text + "\n" +
+                    "Pago: " + cmbTipoPago.Text;
+
+                System.Drawing.Image qrImage = QuickResponse.QuickResponseGenerador(contenidoQR, 10);
+
+                string rutaPdf = Project_CatTech.Layer.Utilitarios.FacturaPdfService.GenerarPdfFactura(
+                    factura,
+                    listaDetalle,
+                    txtNombreCliente.Text.Trim(),
+                    txtCedula.Text.Trim(),
+                    txtUsuario.Text.Trim(),
+                    cmbTipoPago.SelectedItem.ToString(),
+                    _firmaBytes,
+                    qrImage
+                );
+
+                // Enviar correo
+                if (!string.IsNullOrWhiteSpace(correoClienteSeleccionado))
+                {
+                    try
+                    {
+                        Project_CatTech.Utilitarios.EnviarCorreo correo = new Project_CatTech.Utilitarios.EnviarCorreo();
+
+                        string asunto = "Factura " + numeroFinal + " - CatTech";
+                        string body = "<h2>CatTech</h2>" +
+                                        "<p>Estimado cliente,</p>" +
+                                        "<p>Adjuntamos su factura en formato PDF y XML.</p>" +
+                                        "<p><b>Número de factura:</b> " + numeroFinal + "</p>" +
+                                        "<p>Gracias por su compra.</p>";
+
+                        correo.enviarCorreoGmail(body, correoClienteSeleccionado, asunto,
+                            new List<string> { rutaPdf, rutaXml });
+                    }
+                    catch (Exception exCorreo)
+                    {
+                        MessageBox.Show(
+                            "La factura se guardó, pero no se pudo enviar el correo:\n" + exCorreo.Message,
+                            "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La factura se generó, pero el cliente no tiene correo registrado.",
+                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                MessageBox.Show("Factura guardada correctamente. Número: " + numeroFinal,
                     "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 IniciarNuevaFactura();
@@ -239,12 +345,13 @@ namespace Project_CatTech.Layer.UI.Procesos
                     listaDetalle.Add(detalle);
 
                     dgvDatos.Rows.Add(
-                        _idProductoSeleccionado,
-                        txtProducto.Text,  // código                      
-                        precio.ToString("N2"),
-                        cantidad,
-                        subtotalLinea.ToString("N2")
-                    );
+    _idProductoSeleccionado,
+    _codigoProductoSeleccionado, // ← código interno real
+    txtProducto.Text,
+    precio.ToString("N2"),
+    cantidad,
+    subtotalLinea.ToString("N2")
+);
                 }
 
                 CalcularTotales();
@@ -267,14 +374,15 @@ namespace Project_CatTech.Layer.UI.Procesos
                 decimal tipoCambio = 1m;
                 decimal totalDolares = 0m;
 
-                //if (!decimal.TryParse(txtTi.Text, out tipoCambio))
-                //    tipoCambio = 1m;
+                if (decimal.TryParse(txtDolar.Text.Replace(",", ""), out decimal tc) && tc > 0)
+                    tipoCambio = tc;
 
                 if (tipoCambio > 0)
                     totalDolares = _bllFactura.CalcularTotalDolares(totalColones, tipoCambio);
 
                 txtSubTotal.Text = subtotal.ToString("N2");
                 txtImpreso.Text = impuesto.ToString("N2");
+                txtTotal.Text = totalColones.ToString("N2");
                 txtTotalColones.Text = totalColones.ToString("N2");
                 txtTotalDolares.Text = totalDolares.ToString("N2");
             }
@@ -337,7 +445,7 @@ namespace Project_CatTech.Layer.UI.Procesos
             {
                 _tipoCambio = _bllDolar.GetVentaDolar();
                 // textBox15 = campo Tipo de Cambio (según el Designer)
-                txtTipoTarjerta.Text = _tipoCambio.ToString("N2");
+                txtDolar.Text = _tipoCambio.ToString("N2");
             }
             catch
             {
@@ -385,6 +493,18 @@ namespace Project_CatTech.Layer.UI.Procesos
             txtProducto.Text = "";
             txtPrecio.Text = "";
             txtCantidad.Text = "";
+        }
+
+        private void CargarBancos()
+        {
+            cmbBanco.Items.Clear();
+            cmbBanco.Items.Add("BCR");
+            cmbBanco.Items.Add("BNCR");
+            cmbBanco.Items.Add("BAC");
+            cmbBanco.Items.Add("Scotiabank");
+            cmbBanco.Items.Add("Davivienda");
+            cmbBanco.Items.Add("Otro");
+            cmbBanco.SelectedIndex = -1;
         }
 
         private void ConfigurarComboPago()

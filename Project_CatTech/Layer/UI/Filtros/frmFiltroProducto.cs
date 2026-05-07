@@ -29,7 +29,25 @@ namespace Project_CatTech.Layer.UI.Filtros
 
         private void frmFiltroProducto_Load(object sender, EventArgs e)
         {
+            try
+            {
+                IBLLProducto bLLProducto = new BLLProducto();
+                dgvDatos.AutoGenerateColumns = false;
+                dgvDatos.DataSource = bLLProducto.Get_By_Filter("%%");
 
+                dgvDatos.Columns.Clear();
+                dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "IdProducto", DataPropertyName = "IdProducto", HeaderText = "Id", Width = 40 });
+                dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "CodigoInterno", DataPropertyName = "CodigoInterno", HeaderText = "Código", Width = 70 });
+                dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "Modelo", DataPropertyName = "Modelo", HeaderText = "Modelo", Width = 130 });
+              
+                dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "Precio", DataPropertyName = "Precio", HeaderText = "Precio", Width = 90 });
+                dgvDatos.Columns.Add(new DataGridViewTextBoxColumn { Name = "CantidadStock", DataPropertyName = "CantidadStock", HeaderText = "Stock", Width = 55 });
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando productos: " + ex.Message);
+            }
         }
 
         private void btnBuscarProducto_Click(object sender, EventArgs e)
