@@ -32,13 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.txtContrasena = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.chkVerContra = new System.Windows.Forms.CheckBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.epError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.chkMostrarContrasena = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.epError)).BeginInit();
             this.SuspendLayout();
@@ -46,10 +46,10 @@
             // txtContrasena
             // 
             this.txtContrasena.Location = new System.Drawing.Point(574, 218);
-            this.txtContrasena.Multiline = true;
             this.txtContrasena.Name = "txtContrasena";
-            this.txtContrasena.Size = new System.Drawing.Size(163, 31);
-            this.txtContrasena.TabIndex = 0;
+            this.txtContrasena.Size = new System.Drawing.Size(163, 20);
+            this.txtContrasena.TabIndex = 3;
+            this.txtContrasena.UseSystemPasswordChar = true;
             // 
             // label1
             // 
@@ -59,16 +59,6 @@
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Usuario";
-            // 
-            // chkVerContra
-            // 
-            this.chkVerContra.AutoSize = true;
-            this.chkVerContra.Location = new System.Drawing.Point(574, 268);
-            this.chkVerContra.Name = "chkVerContra";
-            this.chkVerContra.Size = new System.Drawing.Size(98, 17);
-            this.chkVerContra.TabIndex = 3;
-            this.chkVerContra.Text = "Ver contraseña";
-            this.chkVerContra.UseVisualStyleBackColor = true;
             // 
             // txtUsuario
             // 
@@ -121,22 +111,34 @@
             // 
             this.epError.ContainerControl = this;
             // 
+            // chkMostrarContrasena
+            // 
+            this.chkMostrarContrasena.AutoSize = true;
+            this.chkMostrarContrasena.Location = new System.Drawing.Point(574, 277);
+            this.chkMostrarContrasena.Name = "chkMostrarContrasena";
+            this.chkMostrarContrasena.Size = new System.Drawing.Size(98, 17);
+            this.chkMostrarContrasena.TabIndex = 10;
+            this.chkMostrarContrasena.Text = "Ver contraseña";
+            this.chkMostrarContrasena.UseVisualStyleBackColor = true;
+            this.chkMostrarContrasena.CheckedChanged += new System.EventHandler(this.chkMostrarContrasena_CheckedChanged);
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 487);
+            this.Controls.Add(this.chkMostrarContrasena);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtUsuario);
-            this.Controls.Add(this.chkVerContra);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtContrasena);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmLogin";
+            this.Text = "Login";
             this.Load += new System.EventHandler(this.frmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.epError)).EndInit();
@@ -149,12 +151,12 @@
 
         private System.Windows.Forms.TextBox txtContrasena;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox chkVerContra;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.ErrorProvider epError;
+        private System.Windows.Forms.CheckBox chkMostrarContrasena;
     }
 }

@@ -82,6 +82,8 @@
     </Reference>
     <Reference Include="System.ValueTuple" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -110,6 +112,7 @@
     <Compile Include="Layer\BLL\BLLProducto.cs" />
     <Compile Include="Layer\BLL\BLLProveedor.cs" />
     <Compile Include="Layer\BLL\BLLProvincia.cs" />
+    <Compile Include="Layer\BLL\BLLReporte.cs" />
     <Compile Include="Layer\BLL\BLLStock.cs" />
     <Compile Include="Layer\BLL\BLLTipoDispositivo.cs" />
     <Compile Include="Layer\BLL\BLLUsuario.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="Layer\DAL\DALProducto.cs" />
     <Compile Include="Layer\DAL\DALProveedor.cs" />
     <Compile Include="Layer\DAL\DALProvincia.cs" />
+    <Compile Include="Layer\DAL\DALReporte.cs" />
     <Compile Include="Layer\DAL\DALStock.cs" />
     <Compile Include="Layer\DAL\DALTipoDispositivo.cs" />
     <Compile Include="Layer\DAL\DALUsuario.cs" />
@@ -156,6 +160,7 @@
     <Compile Include="Layer\Interfaces\IBLL\IBLLPago.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLProducto.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLProveedor.cs" />
+    <Compile Include="Layer\Interfaces\IBLL\IBLLReporte.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLStock.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLTipoDispositivo.cs" />
     <Compile Include="Layer\Interfaces\IBLL\IBLLUsuario.cs" />
@@ -169,6 +174,7 @@
     <Compile Include="Layer\Interfaces\IDAL\IDALProducto.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProveedor.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALProvincia.cs" />
+    <Compile Include="Layer\Interfaces\IDAL\IDALReporte.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALStock.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALTipoDispositivo.cs" />
     <Compile Include="Layer\Interfaces\IDAL\IDALUsuario.cs" />
@@ -194,22 +200,46 @@
     <Compile Include="Layer\UI\FrmBCCR\frmDolar.Designer.cs">
       <DependentUpon>frmDolar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Layer\UI\frmLogin.cs">
+    <Compile Include="Layer\UI\Login\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Layer\UI\frmLogin.Designer.cs">
+    <Compile Include="Layer\UI\Login\frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Layer\UI\frmPrincipal.cs">
+    <Compile Include="Layer\UI\Login\frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Layer\UI\frmPrincipal.Designer.cs">
+    <Compile Include="Layer\UI\Login\frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Layer\UI\Login\frmUsuario.cs">
+    <Compile Include="Layer\UI\Reportes\frmReporteClientes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Layer\UI\Login\frmUsuario.Designer.cs">
+    <Compile Include="Layer\UI\Reportes\frmReporteClientes.Designer.cs">
+      <DependentUpon>frmReporteClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Reportes\frmReporteFacturas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Reportes\frmReporteFacturas.Designer.cs">
+      <DependentUpon>frmReporteFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Reportes\frmReporteGrafico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Reportes\frmReporteGrafico.Designer.cs">
+      <DependentUpon>frmReporteGrafico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Reportes\frmReporteProductosVendidos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Reportes\frmReporteProductosVendidos.Designer.cs">
+      <DependentUpon>frmReporteProductosVendidos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer\UI\Seguridad\frmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Seguridad\frmUsuario.Designer.cs">
       <DependentUpon>frmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="Layer\UI\Mantenimientos\frmMantenimientoCliente.cs">
@@ -260,6 +290,12 @@
     <Compile Include="Layer\UI\Procesos\frmFirma.Designer.cs">
       <DependentUpon>frmFirma.cs</DependentUpon>
     </Compile>
+    <Compile Include="Layer\UI\Seguridad\InformacionEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer\UI\Seguridad\InformacionEmpresa.Designer.cs">
+      <DependentUpon>InformacionEmpresa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilitarios\ClienteReportePdfService.cs" />
@@ -285,13 +321,31 @@
     <EmbeddedResource Include="Layer\UI\FrmBCCR\frmDolar.resx">
       <DependentUpon>frmDolar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Layer\UI\frmLogin.resx">
+    <EmbeddedResource Include="Layer\UI\Login\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Layer\UI\frmPrincipal.resx">
+    <EmbeddedResource Include="Layer\UI\Login\frmPrincipal.ff-Adlm-GH.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Layer\UI\Login\frmUsuario.resx">
+    <EmbeddedResource Include="Layer\UI\Login\frmPrincipal.ff-Adlm-GW.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Login\frmPrincipal.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Reportes\frmReporteClientes.resx">
+      <DependentUpon>frmReporteClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Reportes\frmReporteFacturas.resx">
+      <DependentUpon>frmReporteFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Reportes\frmReporteGrafico.resx">
+      <DependentUpon>frmReporteGrafico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Reportes\frmReporteProductosVendidos.resx">
+      <DependentUpon>frmReporteProductosVendidos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Seguridad\frmUsuario.resx">
       <DependentUpon>frmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Layer\UI\Mantenimientos\frmMantenimientoCliente.resx">
@@ -317,6 +371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Layer\UI\Procesos\frmFirma.resx">
       <DependentUpon>frmFirma.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer\UI\Seguridad\InformacionEmpresa.resx">
+      <DependentUpon>InformacionEmpresa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -347,8 +404,6 @@
   <ItemGroup>
     <Folder Include="Document\" />
     <Folder Include="Factories\" />
-    <Folder Include="Layer\UI\Reportes\" />
-    <Folder Include="Layer\UI\Seguridad\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\encendido.png" />

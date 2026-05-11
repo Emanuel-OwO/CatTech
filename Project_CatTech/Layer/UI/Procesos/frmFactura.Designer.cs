@@ -87,6 +87,7 @@
             this.label23 = new System.Windows.Forms.Label();
             this.txtTotalColones = new System.Windows.Forms.TextBox();
             this.txtTotalDolares = new System.Windows.Forms.TextBox();
+            this.btnEliminar = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).BeginInit();
             this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFirma)).BeginInit();
@@ -235,7 +236,7 @@
             this.dgvDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDatos.Location = new System.Drawing.Point(457, 74);
             this.dgvDatos.Name = "dgvDatos";
-            this.dgvDatos.Size = new System.Drawing.Size(418, 598);
+            this.dgvDatos.Size = new System.Drawing.Size(453, 598);
             this.dgvDatos.TabIndex = 43;
             this.dgvDatos.SelectionChanged += new System.EventHandler(this.dgvDatos_SelectionChanged);
             // 
@@ -282,14 +283,14 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 834);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(887, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(935, 22);
             this.statusStrip1.TabIndex = 35;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(712, 709);
+            this.label12.Location = new System.Drawing.Point(747, 708);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(50, 13);
             this.label12.TabIndex = 66;
@@ -298,7 +299,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(713, 738);
+            this.label13.Location = new System.Drawing.Point(748, 737);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(50, 13);
             this.label13.TabIndex = 67;
@@ -307,7 +308,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(713, 765);
+            this.label14.Location = new System.Drawing.Point(748, 764);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(31, 13);
             this.label14.TabIndex = 68;
@@ -316,7 +317,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(713, 794);
+            this.label15.Location = new System.Drawing.Point(748, 793);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(32, 13);
             this.label15.TabIndex = 69;
@@ -324,28 +325,28 @@
             // 
             // txtSubTotal
             // 
-            this.txtSubTotal.Location = new System.Drawing.Point(775, 702);
+            this.txtSubTotal.Location = new System.Drawing.Point(810, 701);
             this.txtSubTotal.Name = "txtSubTotal";
             this.txtSubTotal.Size = new System.Drawing.Size(100, 20);
             this.txtSubTotal.TabIndex = 70;
             // 
             // txtImpreso
             // 
-            this.txtImpreso.Location = new System.Drawing.Point(775, 736);
+            this.txtImpreso.Location = new System.Drawing.Point(810, 735);
             this.txtImpreso.Name = "txtImpreso";
             this.txtImpreso.Size = new System.Drawing.Size(100, 20);
             this.txtImpreso.TabIndex = 71;
             // 
             // txtTotal
             // 
-            this.txtTotal.Location = new System.Drawing.Point(775, 765);
+            this.txtTotal.Location = new System.Drawing.Point(810, 764);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.Size = new System.Drawing.Size(100, 20);
             this.txtTotal.TabIndex = 72;
             // 
             // txtDolar
             // 
-            this.txtDolar.Location = new System.Drawing.Point(775, 794);
+            this.txtDolar.Location = new System.Drawing.Point(810, 793);
             this.txtDolar.Name = "txtDolar";
             this.txtDolar.Size = new System.Drawing.Size(100, 20);
             this.txtDolar.TabIndex = 73;
@@ -371,10 +372,11 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnNuevaFactura,
             this.btnFacturar,
+            this.btnEliminar,
             this.btnSalir});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(887, 71);
+            this.toolStrip2.Size = new System.Drawing.Size(935, 71);
             this.toolStrip2.TabIndex = 165;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -531,7 +533,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(525, 739);
+            this.label10.Location = new System.Drawing.Point(560, 738);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(70, 13);
             this.label10.TabIndex = 182;
@@ -540,7 +542,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(525, 709);
+            this.label23.Location = new System.Drawing.Point(560, 708);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(72, 13);
             this.label23.TabIndex = 183;
@@ -548,23 +550,33 @@
             // 
             // txtTotalColones
             // 
-            this.txtTotalColones.Location = new System.Drawing.Point(603, 706);
+            this.txtTotalColones.Location = new System.Drawing.Point(638, 705);
             this.txtTotalColones.Name = "txtTotalColones";
             this.txtTotalColones.Size = new System.Drawing.Size(100, 20);
             this.txtTotalColones.TabIndex = 184;
             // 
             // txtTotalDolares
             // 
-            this.txtTotalDolares.Location = new System.Drawing.Point(603, 739);
+            this.txtTotalDolares.Location = new System.Drawing.Point(638, 738);
             this.txtTotalDolares.Name = "txtTotalDolares";
             this.txtTotalDolares.Size = new System.Drawing.Size(100, 20);
             this.txtTotalDolares.TabIndex = 185;
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.Image = ((System.Drawing.Image)(resources.GetObject("btnEliminar.Image")));
+            this.btnEliminar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(118, 68);
+            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // frmFactura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(887, 856);
+            this.ClientSize = new System.Drawing.Size(935, 856);
             this.Controls.Add(this.txtTotalDolares);
             this.Controls.Add(this.txtTotalColones);
             this.Controls.Add(this.label23);
@@ -689,5 +701,6 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtTotalColones;
         private System.Windows.Forms.TextBox txtTotalDolares;
+        private System.Windows.Forms.ToolStripButton btnEliminar;
     }
 }

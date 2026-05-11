@@ -24,7 +24,17 @@ namespace Project_CatTech.Layer.UI
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                this.AcceptButton = btnAceptar;
+                this.CancelButton = btnSalir;
+                txtContrasena.UseSystemPasswordChar = true;
+                txtUsuario.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar el formulario: " + ex.Message);
+            }
         }
 
 
@@ -91,6 +101,18 @@ namespace Project_CatTech.Layer.UI
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void chkMostrarContrasena_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkMostrarContrasena.Checked)
+            {
+                txtContrasena.UseSystemPasswordChar = false; // mostrar
+            }
+            else
+            {
+                txtContrasena.UseSystemPasswordChar = true; // ocultar
+            }
         }
     }
 }

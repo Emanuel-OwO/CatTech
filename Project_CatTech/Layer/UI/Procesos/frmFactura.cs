@@ -299,59 +299,42 @@ namespace Project_CatTech.Layer.UI.Procesos
                     throw new Exception("Debe indicar la cantidad.");
 
                 int cantidad = Convert.ToInt32(txtCantidad.Text);
-                double precio = Convert.ToDouble(txtPrecio.Text);
+                double precio = Convert.ToDouble(txtPrecio.Text.Replace(",", ""));
 
                 if (cantidad <= 0)
                     throw new Exception("La cantidad debe ser mayor a cero.");
 
                 if (cantidad > _stockProductoSeleccionado)
-                    throw new Exception("No hay stock suficiente para este producto.");
+                    throw new Exception($"No hay stock suficiente. Disponible: {_stockProductoSeleccionado}.");
 
-                double subtotalLinea = (double)_bllDetalle.CalcularSubTotal(cantidad, (decimal)precio);
+                // Verificar que la cantidad total acumulada no supere el stock
+                int yaAgregado = listaDetalle
+                    .Where(x => x.IdProducto == _idProductoSeleccionado)
+                    .Sum(x => x.Cantidad);
 
-                // Si el producto ya está en la lista, sumar cantidad
-                FacturaDetalle detalleExistente = listaDetalle
-                    .FirstOrDefault(x => x.IdProducto == _idProductoSeleccionado);
+                if ((yaAgregado + cantidad) > _stockProductoSeleccionado)
+                    throw new Exception("La cantidad total supera el stock disponible.");
 
-                if (detalleExistente != null)
-                {
-                    int nuevaCantidad = detalleExistente.Cantidad + cantidad;
-                    if (nuevaCantidad > _stockProductoSeleccionado)
-                        throw new Exception("La cantidad total supera el stock disponible.");
-
-                    detalleExistente.Cantidad = nuevaCantidad;
-                    detalleExistente.Subtotal = detalleExistente.Cantidad * detalleExistente.Precio;
-
-                    // Actualizar fila en el grid
-                    foreach (DataGridViewRow row in dgvDatos.Rows)
-                    {
-                        if (Convert.ToInt32(row.Cells["colIdProducto"].Value) == _idProductoSeleccionado)
-                        {
-                            row.Cells["colCantidad"].Value = detalleExistente.Cantidad;
-                            row.Cells["colSubtotal"].Value = detalleExistente.Subtotal.ToString("N2");
-                            break;
-                        }
-                    }
-                }
-                else
+                // Agregar una fila por unidad — igual que SweetTech
+                for (int i = 0; i < cantidad; i++)
                 {
                     FacturaDetalle detalle = new FacturaDetalle
                     {
                         IdProducto = _idProductoSeleccionado,
-                        Cantidad = cantidad,
+                        Cantidad = 1,
                         Precio = (decimal)precio,
-                        Subtotal = (decimal)subtotalLinea
+                        Subtotal = (decimal)precio
                     };
                     listaDetalle.Add(detalle);
 
                     dgvDatos.Rows.Add(
-    _idProductoSeleccionado,
-    _codigoProductoSeleccionado, // ← código interno real
-    txtProducto.Text,
-    precio.ToString("N2"),
-    cantidad,
-    subtotalLinea.ToString("N2")
-);
+                        _idProductoSeleccionado,
+                        _codigoProductoSeleccionado,
+                        txtProducto.Text,
+                        precio.ToString("N2"),
+                        1,
+                        precio.ToString("N2")
+                    );
                 }
 
                 CalcularTotales();
@@ -548,6 +531,37 @@ namespace Project_CatTech.Layer.UI.Procesos
         private void txtNumeroFactura_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvDatos.CurrentRow == null)
+                    throw new Exception("Debe seleccionar una línea del detalle.");
+
+                int index = dgvDatos.CurrentRow.Index;
+
+                if (index < 0 || index >= listaDetalle.Count)
+                    throw new Exception("No se pudo identificar la línea seleccionada.");
+
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Desea eliminar esta línea del detalle?",
+                    "Confirmación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    listaDetalle.RemoveAt(index);
+                    dgvDatos.Rows.RemoveAt(index);
+                    CalcularTotales();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -157,9 +157,32 @@ namespace Project_CatTech.Layer.UI.Login
 
         private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            //if (e.RowIndex < 0) return;
 
-            var fila = dgvDatos.Rows[e.RowIndex];
+            //var fila = dgvDatos.Rows[e.RowIndex];
+
+            //txtIdUsuario.Text = fila.Cells["IdUsuario"].Value?.ToString();
+            //txtNombreUsuario.Text = fila.Cells["NombreUsuario"].Value?.ToString();
+            //txtNombre.Text = fila.Cells["Nombre"].Value?.ToString();
+            //txtPrimerApellido.Text = fila.Cells["PrimerApellido"].Value?.ToString();
+            //txtSegundoApellido.Text = fila.Cells["SegundoApellido"].Value?.ToString();
+
+            //// La clave viene encriptada de BD — mostrar vacío por seguridad
+            //// Si el usuario no cambia la clave, se re-encripta la misma
+            //txtClave.Text = "";
+
+            //cmbPerfiles.SelectedValue = fila.Cells["IdPerfil"].Value;
+
+            //bool estado = Convert.ToBoolean(fila.Cells["Estado"].Value ?? false);
+            //rdoActivo.Checked = estado;
+            //rdoInactivo.Checked = !estado;
+        }
+
+        private void dgvDatos_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvDatos.CurrentRow == null) return;
+
+            var fila = dgvDatos.CurrentRow;
 
             txtIdUsuario.Text = fila.Cells["IdUsuario"].Value?.ToString();
             txtNombreUsuario.Text = fila.Cells["NombreUsuario"].Value?.ToString();
@@ -167,8 +190,7 @@ namespace Project_CatTech.Layer.UI.Login
             txtPrimerApellido.Text = fila.Cells["PrimerApellido"].Value?.ToString();
             txtSegundoApellido.Text = fila.Cells["SegundoApellido"].Value?.ToString();
 
-            // La clave viene encriptada de BD — mostrar vacío por seguridad
-            // Si el usuario no cambia la clave, se re-encripta la misma
+            // Por seguridad no mostramos la clave
             txtClave.Text = "";
 
             cmbPerfiles.SelectedValue = fila.Cells["IdPerfil"].Value;
